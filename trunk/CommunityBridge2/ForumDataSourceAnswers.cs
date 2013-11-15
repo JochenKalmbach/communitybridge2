@@ -90,18 +90,19 @@ namespace CommunityBridge2.Answers
         try
         {
           string[] locales = provider.GetSupportedLocales();
+          //string[] locales = new[] {"en-us"};
 
           foreach (var loc in locales)
           {
             try
             {
               // Load the list of all newsgroups:
-              //string localBrand = b;
               var localProvider = provider;
               var forums = localProvider.GetForumList(loc);
 
               foreach (var f in forums.Items)
               {
+                //if (string.Equals(f.ShortName, "windows", StringComparison.OrdinalIgnoreCase) == false) continue;
                 // Build different newsgroups depending on the meta-data
                 var uniqueInfos = _management.LoadAllMetaData(localProvider, f.Id, loc, ForumNewsgroup.GetForumName(f), true);
                 var g = new ForumNewsgroup(f, localProvider, null, uniqueInfos);
@@ -2204,6 +2205,7 @@ namespace CommunityBridge2.Answers
           }
         }
         infos = uniqueInfos.ToList();
+        //System.Diagnostics.Debug.WriteLine(string.Join(Environment.NewLine, infos.Select(p => p.Name)));
       }
 
       return infos;
@@ -2220,28 +2222,28 @@ namespace CommunityBridge2.Answers
 
     public static void GetMetaDataInfos(MetaData metaData, List<MetaDataInfo> uniqueInfos, MetaDataInfo parent)
     {
-      string newName = null;
-      if (parent != null)
-        newName = parent.Name;
       MetaDataInfo myInfo = parent;
       if (metaData.MetaDataTypes.Any(p => p.Id == MetaValue))
       {
-        // INFO: This builds the meta-data like it is defined in the tree:
-        //if (string.IsNullOrEmpty(newName))
-        //  newName = metaData.ShortName;
-        //else
-        //  newName = newName + "." + metaData.ShortName;
-        //var newIds = new List<Guid>();
-        //if (parent != null)
-        //  newIds.AddRange(parent.FilterIds);
-        //newIds.Add(metaData.Id);
-        //myInfo = new MetaDataInfo { Name = newName, FilterIds = newIds.ToArray() };
-        //allInfos.Add(myInfo);
-
         // INFO: This builds the meta-data as one subfolder with unique values
+        myInfo = new MetaDataInfo { Name = metaData.ShortName, FilterIds = new[] { metaData.Id } };
         if (uniqueInfos.Any(p => p.FilterIds[0] == metaData.Id) == false)
         {
-          uniqueInfos.Add(new MetaDataInfo { Name = metaData.ShortName, FilterIds = new[] { metaData.Id } });
+          uniqueInfos.Add(myInfo);
+        }
+
+        // Optional: Build the sub-folders also...
+        if ( (parent != null) 
+          && (parent.FilterIds.Length == 1)  // alternative: Restrict to max. 2 levels...
+          )
+        {
+          // INFO: This builds the meta-data like it is defined in the tree:
+          string newName = parent.Name + "." + metaData.ShortName;
+          var newIds = new List<Guid>();
+          newIds.AddRange(parent.FilterIds);
+          newIds.Add(metaData.Id);
+          myInfo = new MetaDataInfo {Name = newName, FilterIds = newIds.ToArray()};
+          uniqueInfos.Add(myInfo);
         }
       }
       foreach (var childMetaData in metaData.ChildMetaData)

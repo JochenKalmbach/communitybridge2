@@ -1,0 +1,5 @@
+
+https://account.live.com/developers/applications/
+Answers-NNTPBridge
+ClientID: 000000004C108A13
+

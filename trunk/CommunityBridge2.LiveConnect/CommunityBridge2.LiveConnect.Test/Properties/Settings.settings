@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CommunityForumsNNTPServer.LiveConnect.Test.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ClientID" Type="System.String" Scope="User">
+      <Value Profile="(Default)">000000004C0F8E22</Value>
+    </Setting>
+    <Setting Name="RefreshToken" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Scopes" Type="System.String" Scope="User">
+      <Value Profile="(Default)">wl.signin wl.offline_access</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

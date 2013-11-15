@@ -1,0 +1,7 @@
+Login to:
+http://stg2-answers.microsoft.com
+
+
+Web-Service-URL:
+Old: http://cpslite-stg.community.services.support.microsoft.com/QnA.svc/LiveAuth
+http://157.56.56.234/qna.svc/LiveAuth

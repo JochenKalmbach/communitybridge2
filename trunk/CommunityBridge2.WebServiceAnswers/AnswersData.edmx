@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AnswersDataModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.3.5" ProviderManifestToken="3.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="AnswersDataModelStoreContainer">
+          <EntitySet Name="Mapping" EntityType="AnswersDataModel.Store.Mapping" store:Type="Tables" />
+          <EntitySet Name="Version" EntityType="AnswersDataModel.Store.Version" store:Type="Tables" />
+        </EntityContainer>
+        <EntityType Name="Mapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="MessageId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MessageNumber" Type="bigint" Nullable="false" />
+          <Property Name="Author" Type="nvarchar" />
+          <Property Name="Title" Type="nvarchar" />
+          <Property Name="MetaData" Type="nvarchar" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="LastReplyDate" Type="datetime" />
+          <Property Name="ThreadId" Type="uniqueidentifier" />
+          <Property Name="ActivityDate" Type="datetime" />
+          <Property Name="ActivityAction" Type="nvarchar" />
+        </EntityType>
+        <EntityType Name="Version">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Version" Type="bigint" Nullable="false" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AnswersDataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="AnswersDataEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Mappings" EntityType="AnswersDataModel.Mapping" />
+          <EntitySet Name="Versions" EntityType="AnswersDataModel.Version" />
+        </EntityContainer>
+        <EntityType Name="Mapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="MessageId" Type="Guid" Nullable="false" />
+          <Property Name="MessageNumber" Type="Int64" Nullable="false" />
+          <Property Type="String" Name="Author" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Title" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MetaData" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="DateTime" Name="LastReplyDate" />
+          <Property Type="Guid" Name="ThreadId" />
+          <Property Type="DateTime" Name="ActivityDate" />
+          <Property Type="String" Name="ActivityAction" MaxLength="4000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Version">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="Int64" Name="Version1" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AnswersDataModelStoreContainer" CdmEntityContainer="AnswersDataEntities">
+          <EntitySetMapping Name="Mappings"><EntityTypeMapping TypeName="AnswersDataModel.Mapping"><MappingFragment StoreEntitySet="Mapping">
+                <ScalarProperty Name="ActivityAction" ColumnName="ActivityAction" />
+                <ScalarProperty Name="ActivityDate" ColumnName="ActivityDate" />
+                <ScalarProperty Name="ThreadId" ColumnName="ThreadId" />
+                <ScalarProperty Name="LastReplyDate" ColumnName="LastReplyDate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MetaData" ColumnName="MetaData" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+            <ScalarProperty Name="MessageNumber" ColumnName="MessageNumber" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Versions">
+            <EntityTypeMapping TypeName="AnswersDataModel.Version">
+              <MappingFragment StoreEntitySet="Version">
+                <ScalarProperty Name="Version1" ColumnName="Version" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="AnswersData">
+        <EntityTypeShape EntityType="AnswersDataModel.Mapping" Width="1.5" PointX="0.75" PointY="0.75" Height="2.9417936197916665" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnswersDataModel.Version" Width="1.5" PointX="3.375" PointY="0.75" Height="1.4033821614583335" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

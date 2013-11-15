@@ -1,0 +1,23 @@
+﻿<Window x:Class="CommunityBridge2.InfoDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        FontSize="16"
+        Title="Info about Community NNTP Bridge 2" Height="400" Width="400" ShowInTaskbar="False" ResizeMode="NoResize" Icon="/CommunityBridge2;component/Resources/CommunityBridge2.ico" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen">
+    <Grid>
+    <Image Height="150" HorizontalAlignment="Left" Margin="89,66,0,0" Stretch="Fill" VerticalAlignment="Top" Width="200" Source="/CommunityBridge2;component/Resources/CommunityBridge2.ico" />
+        <Button Content="Close" MinHeight="50" HorizontalAlignment="Left" Margin="123,299,0,0" VerticalAlignment="Top" MinWidth="125" Click="Button_Click" />
+        <TextBlock HorizontalAlignment="Left" Margin="50,24,0,0" VerticalAlignment="Top">
+            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="http://communitybridge2.codeplex.com/">http://communitybridge2.codeplex.com/</Hyperlink>
+        </TextBlock>
+        <!--<TextBlock HorizontalAlignment="Left" Margin="33,234,0,0" VerticalAlignment="Top">
+            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="http://communitybridge.kalmbach.eu/">If you like this project, you might donate it ;)</Hyperlink>
+        </TextBlock>-->
+        <TextBlock x:Name="lbVersion" HorizontalAlignment="Center" Margin="0,271,0,0" Text="##Version##" VerticalAlignment="Top" />
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                <GradientStop Color="#FFCDBE9D" Offset="0" />
+                <GradientStop Color="Cornsilk" Offset="1" />
+            </LinearGradientBrush>
+        </Grid.Background>
+    </Grid>
+</Window>

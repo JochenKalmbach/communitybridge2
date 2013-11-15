@@ -1,0 +1,27 @@
+﻿
+// History:
+// 2012-01-21, V01, 1.0.1.0
+// - First release on http://communitybridge2.codeplex.com/
+//
+// 2012-01-24, V02, 1.0.2.0: 
+// - Bugfix for Log-Rotation
+// - Added dialog for sending debug data
+// 2012-01-25, V03, 1.0.3.0:
+// - Checking for new threads now completely based on LastReplyDate
+// 2012-01-25, V04, 1.0.4.0
+// - Solved a small with the last reply date
+// - Special handling of deleted messages
+// 2012-01-26, V05, 1.0.5.0
+// - Now also getting new threads without replies
+// - Changing default metadata view from "InSubjectAndSignature" to "InSignature"
+// 2012-01-28, V06, 1.0.6.0
+// - UserSettings: UpdateInfoMode added; now supports displaying of obsolete messages (deleted, moved, merged)
+// - Better Logging in case of "Server-Fault" Exceptions
+// - Removed creation of first NNTP-Bridge message for each group
+// 2012-01-31, V08, 1.0.8.0
+// - Storage moved to database
+// - Several bugfixes
+// 2012-02-xx, V11, 1.0.11.0
+// - NEWGROUPS not return an emprty list and does not return the whole list
+// 2012-02-29, V12, 1.0.12.0
+// - Bugfix: Refresh from newsgroups are now also refreshing the metadata infos

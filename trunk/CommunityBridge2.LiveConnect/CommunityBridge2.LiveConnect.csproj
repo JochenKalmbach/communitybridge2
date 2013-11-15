@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3EA3C22C-11FC-4678-B791-F91FA91F6318}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CommunityBridge2.LiveConnect</RootNamespace>
+    <AssemblyName>CommunityBridge2.LiveConnect</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;DESKTOP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;DESKTOP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AuthResult.cs" />
+    <Compile Include="Internal\ApiMethod.cs" />
+    <Compile Include="Internal\AuthConstant.cs" />
+    <Compile Include="Internal\AuthEndpointsInfo.cs" />
+    <Compile Include="Internal\AuthErrorCodes.cs" />
+    <Compile Include="Internal\DisplayType.cs" />
+    <Compile Include="Internal\DynamicDictionary.cs" />
+    <Compile Include="Internal\HttpMethods.cs" />
+    <Compile Include="Internal\IAuthClient.cs" />
+    <Compile Include="Internal\IServerResponseReaderObserver.cs" />
+    <Compile Include="Internal\IWebRequestFactory.cs" />
+    <Compile Include="Internal\LiveAuthClientCore.cs" />
+    <Compile Include="Internal\LiveDownloadOperationResult.cs" />
+    <Compile Include="Internal\Operations\ApiOperation.cs" />
+    <Compile Include="Internal\Operations\ApiWriteOperation.cs" />
+    <Compile Include="Internal\Operations\DownloadOperation.cs" />
+    <Compile Include="Internal\Operations\GetUploadLinkOperation.cs" />
+    <Compile Include="Internal\Operations\Operation.cs" />
+    <Compile Include="Internal\Operations\OperationStatus.cs" />
+    <Compile Include="Internal\Operations\StreamCopyOperation.cs" />
+    <Compile Include="Internal\Operations\UploadOperation.cs" />
+    <Compile Include="Internal\Operations\WebOperation.cs" />
+    <Compile Include="Internal\Platform.cs" />
+    <Compile Include="Internal\QueryParameters.cs" />
+    <Compile Include="Internal\ResourceHelper.cs" />
+    <Compile Include="Internal\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\ResponseType.cs" />
+    <Compile Include="Internal\Serialization\IJsonSerializable.cs" />
+    <Compile Include="Internal\Serialization\IndentedTextWriter.cs" />
+    <Compile Include="Internal\Serialization\JsonReader.cs" />
+    <Compile Include="Internal\Serialization\JsonWriter.cs" />
+    <Compile Include="Internal\ServerResponseReader.cs" />
+    <Compile Include="Internal\StringBuilderExtension.cs" />
+    <Compile Include="Internal\SynchronizationContextWrapper.cs" />
+    <Compile Include="Internal\Utilities\ErrorText.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ErrorText.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\Utilities\LiveAuthRequestUtility.cs" />
+    <Compile Include="Internal\Utilities\LiveAuthUtility.cs" />
+    <Compile Include="Internal\Utilities\LiveUtility.cs" />
+    <Compile Include="Internal\WebRequestFactory.cs" />
+    <Compile Include="LiveAuthForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LiveAuthForm.designer.cs">
+      <DependentUpon>LiveAuthForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Public\IRefreshTokenHandler.cs" />
+    <Compile Include="Public\LiveAuthClient.cs" />
+    <Compile Include="Public\LiveAuthException.cs" />
+    <Compile Include="Public\LiveConnectClient.cs" />
+    <Compile Include="Public\LiveConnectClientTaskAsync.cs" />
+    <Compile Include="Public\LiveConnectException.cs" />
+    <Compile Include="Public\LiveConnectSession.cs" />
+    <Compile Include="Public\LiveConnectSessionStatus.cs" />
+    <Compile Include="Public\LiveLoginResult.cs" />
+    <Compile Include="Public\LiveOperationProgress.cs" />
+    <Compile Include="Public\LiveOperationResult.cs" />
+    <Compile Include="Public\OverwriteOption.cs" />
+    <Compile Include="Public\RefreshTokenInfo.cs" />
+    <Compile Include="Public\ThemeType.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Internal\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Internal\Utilities\ErrorText.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErrorText.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LiveAuthForm.resx">
+      <DependentUpon>LiveAuthForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

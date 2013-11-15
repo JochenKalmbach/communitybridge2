@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Microsoft.MSCOM.Monitoring" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Microsoft.MSCOM.Monitoring" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="MonitoredServicesResponse">
+    <xs:sequence>
+      <xs:element name="ConfigFileEnvironmentName" nillable="true" type="xs:string" />
+      <xs:element name="ConfigFileExpirationModuloInMinutes" type="xs:int" />
+      <xs:element name="ConfigFileLastModifiedTime" type="xs:dateTime" />
+      <xs:element name="ConfigFileNextExpirationTime" type="xs:dateTime" />
+      <xs:element name="ConfigFilePath" nillable="true" type="xs:string" />
+      <xs:element name="ConfigFileProjectName" nillable="true" type="xs:string" />
+      <xs:element name="ConfigFileVersion" nillable="true" type="xs:string" />
+      <xs:element name="CustomInfo" nillable="true" type="xs:string" />
+      <xs:element name="DatabaseInfo" nillable="true" type="xs:string" />
+      <xs:element name="IsHttps" type="xs:boolean" />
+      <xs:element name="RequestContentType" nillable="true" type="xs:string" />
+      <xs:element name="ServicesMachine" nillable="true" type="xs:string" />
+      <xs:element name="ServicesName" nillable="true" type="xs:string" />
+      <xs:element name="ServicesTime" type="xs:dateTime" />
+      <xs:element name="SuccessFlag" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MonitoredServicesResponse" nillable="true" type="tns:MonitoredServicesResponse" />
+</xs:schema>

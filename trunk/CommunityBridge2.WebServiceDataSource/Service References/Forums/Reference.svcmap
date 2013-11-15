@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="8983aeee-7206-4927-a329-02697a5b3894" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ForumsService.xsd" MetadataType="Schema" ID="18e07d8e-1b91-4d59-a4f2-d93e853e4686" SourceId="1" SourceUrl="http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc?xsd=xsd3" />
+    <MetadataFile FileName="ForumsService6.xsd" MetadataType="Schema" ID="5d7cef9f-c562-4370-ae26-9d1bab890c7a" SourceId="1" SourceUrl="http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc?xsd=xsd6" />
+    <MetadataFile FileName="ForumsService3.xsd" MetadataType="Schema" ID="e8447d95-2f73-435f-afdf-dab4ce3696ec" SourceId="1" SourceUrl="http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ForumsService2.xsd" MetadataType="Schema" ID="befc9079-3736-43a0-b3a0-259dfbc9cf3e" SourceId="1" SourceUrl="http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ForumsService61.xsd" MetadataType="Schema" ID="4a72b859-0fb3-4447-b229-c04f12428240" SourceId="1" SourceUrl="http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc?xsd=xsd7" />
+    <MetadataFile FileName="ForumsService.wsdl" MetadataType="Wsdl" ID="47176cb9-f263-4b18-90ae-858c49060310" SourceId="1" SourceUrl="http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc" />
+    <MetadataFile FileName="ForumsService4.xsd" MetadataType="Schema" ID="3e4ed0c0-f990-48ab-bc41-222ea61ecf53" SourceId="1" SourceUrl="http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc?xsd=xsd4" />
+    <MetadataFile FileName="ForumsService5.xsd" MetadataType="Schema" ID="a8aaefdd-6ccc-4bdc-8e11-e9a0f6cb5594" SourceId="1" SourceUrl="http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ForumsService1.xsd" MetadataType="Schema" ID="2ae731c0-8b5a-4646-a3df-02c4f056266b" SourceId="1" SourceUrl="http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc?xsd=xsd5" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

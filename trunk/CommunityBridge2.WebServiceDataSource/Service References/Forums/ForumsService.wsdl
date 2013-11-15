@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://forums.microsoft.com/service/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ForumsService" targetNamespace="http://forums.microsoft.com/service/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="wshttp_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://forums.microsoft.com/service/Imports">
+      <xsd:import schemaLocation="http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc?xsd=xsd6" namespace="http://forums.microsoft.com/service/" />
+      <xsd:import schemaLocation="http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Microsoft.Com.Forums.Service" />
+      <xsd:import schemaLocation="http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Microsoft.MSCOM.Monitoring" />
+      <xsd:import schemaLocation="http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Microsoft.Forums.Security.Models" />
+      <xsd:import schemaLocation="http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Microsoft.Com.Forums.Model" />
+      <xsd:import schemaLocation="http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Microsoft.Forums.Data.Models" />
+      <xsd:import schemaLocation="http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc?xsd=xsd7" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IForumsService_GetForumMessagesBriefForNNTP_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetForumMessagesBriefForNNTP" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetForumMessagesBriefForNNTP_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetForumMessagesBriefForNNTPResponse" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_CreateQuestionThread_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateQuestionThread" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_CreateQuestionThread_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateQuestionThreadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_CreateReply_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateReply" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_CreateReply_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateReplyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetActiveBrands_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetActiveBrands" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetActiveBrands_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetActiveBrandsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetActiveLocales_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetActiveLocales" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetActiveLocales_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetActiveLocalesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetAllForumsByBrand_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllForumsByBrand" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetAllForumsByBrand_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllForumsByBrandResponse" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetAllForumNewsGroupsByBrand_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllForumNewsGroupsByBrand" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetAllForumNewsGroupsByBrand_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllForumNewsGroupsByBrandResponse" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetAllNewForumNewsGroupsByBrand_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllNewForumNewsGroupsByBrand" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetAllNewForumNewsGroupsByBrand_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllNewForumNewsGroupsByBrandResponse" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetForum_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetForum" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetForum_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetForumResponse" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetForumNewsGroup_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetForumNewsGroup" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetForumNewsGroup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetForumNewsGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetForumNewsGroupByName_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetForumNewsGroupByName" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetForumNewsGroupByName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetForumNewsGroupByNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetStartingMessageIndexForNNTP_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStartingMessageIndexForNNTP" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetStartingMessageIndexForNNTP_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStartingMessageIndexForNNTPResponse" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetMessage_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMessage" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetMessage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_Ping_InputMessage">
+    <wsdl:part name="parameters" element="tns:Ping" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_Ping_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_PingMonitoredService_InputMessage">
+    <wsdl:part name="parameters" element="tns:PingMonitoredService" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_PingMonitoredService_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PingMonitoredServiceResponse" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetMaxReturnPageSize_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMaxReturnPageSize" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetMaxReturnPageSize_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMaxReturnPageSizeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetForumMessagesBrief_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetForumMessagesBrief" />
+  </wsdl:message>
+  <wsdl:message name="IForumsService_GetForumMessagesBrief_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetForumMessagesBriefResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IForumsService">
+    <wsdl:operation name="GetForumMessagesBriefForNNTP">
+      <wsdl:input wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetForumMessagesBriefForNNTP" message="tns:IForumsService_GetForumMessagesBriefForNNTP_InputMessage" />
+      <wsdl:output wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetForumMessagesBriefForNNTPResponse" message="tns:IForumsService_GetForumMessagesBriefForNNTP_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateQuestionThread">
+      <wsdl:input wsaw:Action="http://forums.microsoft.com/service/IForumsService/CreateQuestionThread" message="tns:IForumsService_CreateQuestionThread_InputMessage" />
+      <wsdl:output wsaw:Action="http://forums.microsoft.com/service/IForumsService/CreateQuestionThreadResponse" message="tns:IForumsService_CreateQuestionThread_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateReply">
+      <wsdl:input wsaw:Action="http://forums.microsoft.com/service/IForumsService/CreateReply" message="tns:IForumsService_CreateReply_InputMessage" />
+      <wsdl:output wsaw:Action="http://forums.microsoft.com/service/IForumsService/CreateReplyResponse" message="tns:IForumsService_CreateReply_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetActiveBrands">
+      <wsdl:input wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetActiveBrands" message="tns:IForumsService_GetActiveBrands_InputMessage" />
+      <wsdl:output wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetActiveBrandsResponse" message="tns:IForumsService_GetActiveBrands_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetActiveLocales">
+      <wsdl:input wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetActiveLocales" message="tns:IForumsService_GetActiveLocales_InputMessage" />
+      <wsdl:output wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetActiveLocalesResponse" message="tns:IForumsService_GetActiveLocales_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllForumsByBrand">
+      <wsdl:input wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetAllForumsByBrand" message="tns:IForumsService_GetAllForumsByBrand_InputMessage" />
+      <wsdl:output wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetAllForumsByBrandResponse" message="tns:IForumsService_GetAllForumsByBrand_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllForumNewsGroupsByBrand">
+      <wsdl:input wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetAllForumNewsGroupsByBrand" message="tns:IForumsService_GetAllForumNewsGroupsByBrand_InputMessage" />
+      <wsdl:output wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetAllForumNewsGroupsByBrandResponse" message="tns:IForumsService_GetAllForumNewsGroupsByBrand_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllNewForumNewsGroupsByBrand">
+      <wsdl:input wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetAllNewForumNewsGroupsByBrand" message="tns:IForumsService_GetAllNewForumNewsGroupsByBrand_InputMessage" />
+      <wsdl:output wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetAllNewForumNewsGroupsByBrandResponse" message="tns:IForumsService_GetAllNewForumNewsGroupsByBrand_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetForum">
+      <wsdl:input wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetForum" message="tns:IForumsService_GetForum_InputMessage" />
+      <wsdl:output wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetForumResponse" message="tns:IForumsService_GetForum_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetForumNewsGroup">
+      <wsdl:input wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetForumNewsGroup" message="tns:IForumsService_GetForumNewsGroup_InputMessage" />
+      <wsdl:output wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetForumNewsGroupResponse" message="tns:IForumsService_GetForumNewsGroup_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetForumNewsGroupByName">
+      <wsdl:input wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetForumNewsGroupByName" message="tns:IForumsService_GetForumNewsGroupByName_InputMessage" />
+      <wsdl:output wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetForumNewsGroupByNameResponse" message="tns:IForumsService_GetForumNewsGroupByName_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStartingMessageIndexForNNTP">
+      <wsdl:input wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetStartingMessageIndexForNNTP" message="tns:IForumsService_GetStartingMessageIndexForNNTP_InputMessage" />
+      <wsdl:output wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetStartingMessageIndexForNNTPResponse" message="tns:IForumsService_GetStartingMessageIndexForNNTP_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMessage">
+      <wsdl:input wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetMessage" message="tns:IForumsService_GetMessage_InputMessage" />
+      <wsdl:output wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetMessageResponse" message="tns:IForumsService_GetMessage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <wsdl:input wsaw:Action="http://forums.microsoft.com/service/IForumsService/Ping" message="tns:IForumsService_Ping_InputMessage" />
+      <wsdl:output wsaw:Action="http://forums.microsoft.com/service/IForumsService/PingResponse" message="tns:IForumsService_Ping_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PingMonitoredService">
+      <wsdl:input wsaw:Action="http://forums.microsoft.com/service/IForumsService/PingMonitoredService" message="tns:IForumsService_PingMonitoredService_InputMessage" />
+      <wsdl:output wsaw:Action="http://forums.microsoft.com/service/IForumsService/PingMonitoredServiceResponse" message="tns:IForumsService_PingMonitoredService_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMaxReturnPageSize">
+      <wsdl:input wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetMaxReturnPageSize" message="tns:IForumsService_GetMaxReturnPageSize_InputMessage" />
+      <wsdl:output wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetMaxReturnPageSizeResponse" message="tns:IForumsService_GetMaxReturnPageSize_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetForumMessagesBrief">
+      <wsdl:input wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetForumMessagesBrief" message="tns:IForumsService_GetForumMessagesBrief_InputMessage" />
+      <wsdl:output wsaw:Action="http://forums.microsoft.com/service/IForumsService/GetForumMessagesBriefResponse" message="tns:IForumsService_GetForumMessagesBrief_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="wshttp" type="tns:IForumsService">
+    <wsp:PolicyReference URI="#wshttp_policy" />
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetForumMessagesBriefForNNTP">
+      <soap12:operation soapAction="http://forums.microsoft.com/service/IForumsService/GetForumMessagesBriefForNNTP" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateQuestionThread">
+      <soap12:operation soapAction="http://forums.microsoft.com/service/IForumsService/CreateQuestionThread" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateReply">
+      <soap12:operation soapAction="http://forums.microsoft.com/service/IForumsService/CreateReply" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetActiveBrands">
+      <soap12:operation soapAction="http://forums.microsoft.com/service/IForumsService/GetActiveBrands" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetActiveLocales">
+      <soap12:operation soapAction="http://forums.microsoft.com/service/IForumsService/GetActiveLocales" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllForumsByBrand">
+      <soap12:operation soapAction="http://forums.microsoft.com/service/IForumsService/GetAllForumsByBrand" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllForumNewsGroupsByBrand">
+      <soap12:operation soapAction="http://forums.microsoft.com/service/IForumsService/GetAllForumNewsGroupsByBrand" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllNewForumNewsGroupsByBrand">
+      <soap12:operation soapAction="http://forums.microsoft.com/service/IForumsService/GetAllNewForumNewsGroupsByBrand" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetForum">
+      <soap12:operation soapAction="http://forums.microsoft.com/service/IForumsService/GetForum" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetForumNewsGroup">
+      <soap12:operation soapAction="http://forums.microsoft.com/service/IForumsService/GetForumNewsGroup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetForumNewsGroupByName">
+      <soap12:operation soapAction="http://forums.microsoft.com/service/IForumsService/GetForumNewsGroupByName" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStartingMessageIndexForNNTP">
+      <soap12:operation soapAction="http://forums.microsoft.com/service/IForumsService/GetStartingMessageIndexForNNTP" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMessage">
+      <soap12:operation soapAction="http://forums.microsoft.com/service/IForumsService/GetMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <soap12:operation soapAction="http://forums.microsoft.com/service/IForumsService/Ping" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PingMonitoredService">
+      <soap12:operation soapAction="http://forums.microsoft.com/service/IForumsService/PingMonitoredService" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMaxReturnPageSize">
+      <soap12:operation soapAction="http://forums.microsoft.com/service/IForumsService/GetMaxReturnPageSize" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetForumMessagesBrief">
+      <soap12:operation soapAction="http://forums.microsoft.com/service/IForumsService/GetForumMessagesBrief" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ForumsService">
+    <wsdl:port name="wshttp" binding="tns:wshttp">
+      <soap12:address location="http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

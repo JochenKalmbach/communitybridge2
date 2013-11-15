@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Microsoft.Com.Forums.Service" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Microsoft.Com.Forums.Service" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Microsoft.Forums.Security.Models" />
+  <xs:import schemaLocation="http://services.social.microsoft.com/ForumsServicePreview/ForumsService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Microsoft.Com.Forums.Model" />
+  <xs:simpleType name="ForumObjectType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Forum" />
+      <xs:enumeration value="Thread" />
+      <xs:enumeration value="Message" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ForumObjectType" nillable="true" type="tns:ForumObjectType" />
+  <xs:complexType name="BriefMessage">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Archived" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Body" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ContentType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="tns:BriefUser" />
+      <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DiscussionGroupId" type="ser:guid" />
+      <xs:element minOccurs="0" name="DiscussionId" type="ser:guid" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="IsAbusive" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsAnswer" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsProposedAnswer" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ModifiedBy" nillable="true" type="tns:BriefUser" />
+      <xs:element minOccurs="0" name="ModifiedById" type="ser:guid" />
+      <xs:element minOccurs="0" name="ModifiedDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="NntpMessageIndex" type="xs:int" />
+      <xs:element minOccurs="0" name="ParentId" nillable="true" type="ser:guid" />
+      <xs:element minOccurs="0" name="Subject" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TotalReplies" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BriefMessage" nillable="true" type="tns:BriefMessage" />
+  <xs:complexType name="BriefUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AnswersCount" type="xs:int" />
+      <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="IsAdministrator" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsInappropriate" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsMsft" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsMvp" type="xs:boolean" />
+      <xs:element minOccurs="0" name="JoinedDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastActiveDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Points" type="xs:int" />
+      <xs:element minOccurs="0" name="PostsCount" type="xs:int" />
+      <xs:element minOccurs="0" name="Stars" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BriefUser" nillable="true" type="tns:BriefUser" />
+  <xs:complexType name="Forum">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BriefForum">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Announcements" nillable="true" type="tns:ArrayOfAnnouncement" />
+          <xs:element minOccurs="0" name="Categories" nillable="true" type="tns:ArrayOfCategory" />
+          <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Statistics" nillable="true" type="tns:ForumFact" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Forum" nillable="true" type="tns:Forum" />
+  <xs:complexType name="BriefForum">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BugTracking" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ForumId" type="ser:guid" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Microsoft.Forums.Security.Models" minOccurs="0" name="GroupType" type="q1:DiscussionGroupType" />
+      <xs:element minOccurs="0" name="IsLocked" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsPrivate" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Language" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UniqueName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BriefForum" nillable="true" type="tns:BriefForum" />
+  <xs:complexType name="ArrayOfAnnouncement">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Announcement" nillable="true" type="tns:Announcement" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAnnouncement" nillable="true" type="tns:ArrayOfAnnouncement" />
+  <xs:complexType name="Announcement">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Created" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="tns:User" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Expires" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Announcement" nillable="true" type="tns:Announcement" />
+  <xs:complexType name="User">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BriefUser">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Permissions" nillable="true" type="tns:ArrayOfForumPermission" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="User" nillable="true" type="tns:User" />
+  <xs:complexType name="ArrayOfForumPermission">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ForumPermission" nillable="true" type="tns:ForumPermission" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfForumPermission" nillable="true" type="tns:ArrayOfForumPermission" />
+  <xs:complexType name="ForumPermission">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CanMarkAnswers" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CanPost" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CanViewAbusive" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CanViewDeleted" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CanViewMessageHistory" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ForumId" type="ser:guid" />
+      <xs:element minOccurs="0" name="IsAnswerer" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsModerator" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsOwner" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ForumPermission" nillable="true" type="tns:ForumPermission" />
+  <xs:complexType name="ArrayOfCategory">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Category" nillable="true" type="tns:Category" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCategory" nillable="true" type="tns:ArrayOfCategory" />
+  <xs:complexType name="Category">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Category" nillable="true" type="tns:Category" />
+  <xs:complexType name="ForumFact">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="LastPostAuthorName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastPostDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastPostThreadId" type="ser:guid" />
+      <xs:element minOccurs="0" name="LastPostTitle" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastReplyId" nillable="true" type="ser:guid" />
+      <xs:element minOccurs="0" name="MaxNNTPMessageIndex" type="xs:int" />
+      <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ModifiedThreadId" nillable="true" type="ser:guid" />
+      <xs:element minOccurs="0" name="TotalAnswered" type="xs:int" />
+      <xs:element minOccurs="0" name="TotalComments" type="xs:int" />
+      <xs:element minOccurs="0" name="TotalDeletedMessages" type="xs:int" />
+      <xs:element minOccurs="0" name="TotalMessages" type="xs:int" />
+      <xs:element minOccurs="0" name="TotalQuestions" type="xs:int" />
+      <xs:element minOccurs="0" name="TotalRecentMessages" type="xs:int" />
+      <xs:element minOccurs="0" name="TotalRecentThreads" type="xs:int" />
+      <xs:element minOccurs="0" name="TotalRecentUsers" type="xs:int" />
+      <xs:element minOccurs="0" name="TotalThreads" type="xs:int" />
+      <xs:element minOccurs="0" name="TotalUnanswered" type="xs:int" />
+      <xs:element minOccurs="0" name="TotalUnassigned" type="xs:int" />
+      <xs:element minOccurs="0" name="TotalUsers" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ForumFact" nillable="true" type="tns:ForumFact" />
+  <xs:complexType name="ForumNewsGroup">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ForumId" type="ser:guid" />
+      <xs:element minOccurs="0" name="Language" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MaxNNTPMessageIndex" type="xs:int" />
+      <xs:element minOccurs="0" name="UniqueName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ForumNewsGroup" nillable="true" type="tns:ForumNewsGroup" />
+  <xs:complexType name="Message">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BriefMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="MessageHistory" nillable="true" type="tns:ArrayOfMessageHistory" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Message" nillable="true" type="tns:Message" />
+  <xs:complexType name="ArrayOfMessageHistory">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MessageHistory" nillable="true" type="tns:MessageHistory" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMessageHistory" nillable="true" type="tns:ArrayOfMessageHistory" />
+  <xs:complexType name="MessageHistory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Edited" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EditorId" type="ser:guid" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Microsoft.Com.Forums.Model" minOccurs="0" name="ItemType" type="q2:HistoryItemType" />
+      <xs:element minOccurs="0" name="MessageId" type="ser:guid" />
+      <xs:element minOccurs="0" name="Reason" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MessageHistory" nillable="true" type="tns:MessageHistory" />
+  <xs:complexType name="BriefMessagesContainer">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="{0}sContainer" Namespace="http://schemas.datacontract.org/2004/07/Microsoft.Com.Forums.Service" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="BriefMessage" Namespace="http://schemas.datacontract.org/2004/07/Microsoft.Com.Forums.Service" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Results" nillable="true" type="tns:ArrayOfBriefMessage" />
+      <xs:element minOccurs="0" name="TotalRecords" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BriefMessagesContainer" nillable="true" type="tns:BriefMessagesContainer" />
+  <xs:complexType name="ArrayOfBriefMessage">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BriefMessage" nillable="true" type="tns:BriefMessage" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBriefMessage" nillable="true" type="tns:ArrayOfBriefMessage" />
+  <xs:complexType name="ForumsContainer">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="{0}sContainer" Namespace="http://schemas.datacontract.org/2004/07/Microsoft.Com.Forums.Service" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="Forum" Namespace="http://schemas.datacontract.org/2004/07/Microsoft.Com.Forums.Service" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Results" nillable="true" type="tns:ArrayOfForum" />
+      <xs:element minOccurs="0" name="TotalRecords" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ForumsContainer" nillable="true" type="tns:ForumsContainer" />
+  <xs:complexType name="ArrayOfForum">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Forum" nillable="true" type="tns:Forum" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfForum" nillable="true" type="tns:ArrayOfForum" />
+  <xs:complexType name="ForumNewsGroupsContainer">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="{0}sContainer" Namespace="http://schemas.datacontract.org/2004/07/Microsoft.Com.Forums.Service" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="ForumNewsGroup" Namespace="http://schemas.datacontract.org/2004/07/Microsoft.Com.Forums.Service" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Results" nillable="true" type="tns:ArrayOfForumNewsGroup" />
+      <xs:element minOccurs="0" name="TotalRecords" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ForumNewsGroupsContainer" nillable="true" type="tns:ForumNewsGroupsContainer" />
+  <xs:complexType name="ArrayOfForumNewsGroup">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ForumNewsGroup" nillable="true" type="tns:ForumNewsGroup" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfForumNewsGroup" nillable="true" type="tns:ArrayOfForumNewsGroup" />
+</xs:schema>

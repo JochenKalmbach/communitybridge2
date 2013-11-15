@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Microsoft.Forums.Data.Models" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Microsoft.Forums.Data.Models" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="DiscussionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Thread" />
+      <xs:enumeration value="Post" />
+      <xs:enumeration value="Resource" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="DiscussionType" nillable="true" type="tns:DiscussionType" />
+</xs:schema>

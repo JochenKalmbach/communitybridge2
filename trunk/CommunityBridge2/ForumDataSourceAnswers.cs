@@ -872,9 +872,9 @@ namespace CommunityBridge2.Answers
                 if ((metaInfo == UserSettings.MetaInfoDisplay.InSubject) ||
                     (metaInfo == UserSettings.MetaInfoDisplay.InSubjectAndSignature))
                 {
-                    if (string.IsNullOrEmpty(dbMap.MetaData) == false)
-                    {
-                        string metaDataAsString = GetMetaDataString(g, dbMap.MetaData);
+                    if (msg.OptThread != null && msg.OptThread.Metadata != null)
+                    { 
+                        string metaDataAsString = GetMetaDataString(g, msg.OptThread.Metadata);
                         if (string.IsNullOrEmpty(metaDataAsString) == false)
                             subject = "[" + metaDataAsString + "] " + subject;
                     }
@@ -1117,14 +1117,11 @@ namespace CommunityBridge2.Answers
 
             if ((metaInfo == UserSettings.MetaInfoDisplay.InSignature) || (metaInfo == UserSettings.MetaInfoDisplay.InSubjectAndSignature))
             {
-                if (dbMap != null)
+                if (msg.OptThread != null)
                 {
-                    if (string.IsNullOrEmpty(dbMap.MetaData) == false)
-                    {
-                        string metaDataAsString = GetMetaDataString(g, dbMap.MetaData);
-                        if (string.IsNullOrEmpty(metaDataAsString) == false)
-                            mhStr.Append("Meta tags: " + metaDataAsString + "<br/>");
-                    }
+                    string metaDataAsString = GetMetaDataString(g, msg.OptThread.Metadata);
+                    if (string.IsNullOrEmpty(metaDataAsString) == false)
+                        mhStr.Append("Meta tags: " + metaDataAsString + "<br/>");
                 }
             }
 
@@ -1265,43 +1262,16 @@ namespace CommunityBridge2.Answers
             }
         }
 
-        private string GetMetaDataString(ForumNewsgroup group, string metaData)
+        private string GetMetaDataString(ForumNewsgroup group, IEnumerable<WebServiceAnswers.Swagger.Metadata> metaData)
         {
-            if (string.IsNullOrEmpty(metaData))
+            if (metaData == null)
                 return null;
-            if (group.UniqueInfos == null)
-                return null;
-            string[] guids = metaData.Split(':');
 
             var sb = new StringBuilder();
-            foreach (var idStr in guids)
+            foreach (var idStr in metaData)
             {
-                Guid? id = null;
-                bool found = false;
-                try
-                {
-                    id = Guid.ParseExact(idStr, "D");
-                }
-                catch (Exception)
-                {
-                }
-                // Try to find this meta-data in the group; only if this is not present in the group, then display it...
-                if (id != null)
-                {
-                    // Now try to dfind it in the infos...
-                    var info = group.UniqueInfos.FirstOrDefault(p => p.FilterIds[0] == id);
-                    if (info != null)
-                    {
                         if (sb.Length > 0) sb.Append("; ");
-                        sb.Append(info.Name);
-                        found = true;
-                    }
-                }
-                if (found == false)
-                {
-                    if (sb.Length > 0) sb.Append("; ");
-                    sb.Append(idStr);
-                }
+                        sb.Append(idStr.ShortName);
             }
             return sb.ToString();
         }
@@ -1842,22 +1812,20 @@ namespace CommunityBridge2.Answers
 
         private string BuildMetaDataString(ForumNewsgroup group, WebServiceAnswers.Swagger.Content thread)
         {
-            return string.Empty;
-            // TODO:
-            //if (thread == null)
-            //  return null;
-            //if (thread.ThreadMetaDataList == null)
-            //  return null;
-            //var sb = new StringBuilder();
-            //foreach (var md in thread.ThreadMetaDataList)
-            //{
-            //  if (md != null)
-            //  {
-            //    if (sb.Length > 0) sb.Append(":");
-            //    sb.Append(md.MetaDataId);
-            //  }
-            //}
-            //return sb.ToString();
+            if (thread == null)
+                return null;
+            if (thread.Metadata == null)
+                return null;
+            var sb = new StringBuilder();
+            foreach (var md in thread.Metadata)
+            {
+                if (md != null)
+                {
+                    if (sb.Length > 0) sb.Append(":");
+                    //sb.Append(md.LanguageLocale; md.ShortName);
+                }
+            }
+            return sb.ToString();
         }
 
         enum InternalThreadFilter
@@ -1924,9 +1892,9 @@ namespace CommunityBridge2.Answers
             {
                 Debug.Assert(internalThreadFilter == InternalThreadFilter.FirstAccess);
             }
-            Guid[] metaDataFilter = null;
+            string[] shortNames = null;
             if (group.MetaDataInfo != null)
-                metaDataFilter = group.MetaDataInfo.FilterIds;
+                shortNames = new[] { group.MetaDataInfo.Name };
 
             var resThreads = new Dictionary<Guid, WebServiceAnswers.Swagger.Content>();
 
@@ -1952,7 +1920,7 @@ namespace CommunityBridge2.Answers
 
             // The first call should be not parallel! Then we know how many threads we have (threads.TotalResultCount) and then we should start calling in parallel!
             var threads = provider.GetThreadListByForumId(
-              group.ForumId, group.ShortName, group.Locale, metaDataFilter, since, /*filter,*/ sortOrder,
+              group.ForumId, group.ShortName, group.Locale, shortNames, since, /*filter,*/ sortOrder,
               SortDirection.Desc, 1, pageSize,
               AdditionalThreadDataOptions.Author);
             if ((threads == null) || (threads.Items == null) || (threads.Items.Any() == false))
@@ -1992,7 +1960,7 @@ namespace CommunityBridge2.Answers
                         if (maxpageSize <= 0)
                             maxpageSize = 1;
                 // allow 1 thread to be overlapped; this might happen if between two calls a new thread is created
-                var threads2 = provider.GetThreadListByForumId(group.ForumId, group.ShortName, group.Locale, metaDataFilter, since, /*filter,*/
+                var threads2 = provider.GetThreadListByForumId(group.ForumId, group.ShortName, group.Locale, shortNames, since, /*filter,*/
                                                                sortOrder,
                                                                SortDirection.Desc, startRow, maxpageSize,
                                                                AdditionalThreadDataOptions.Author);
@@ -2121,19 +2089,29 @@ namespace CommunityBridge2.Answers
 
         public Article GetMessageByMsgNo(ForumNewsgroup forumNewsgroup, int articleNumber, /*IForumData provider*/ SwaggerAccess provider)
         {
-            WebServiceAnswers.Mapping map;
-            lock (forumNewsgroup)
+            try
             {
-                using (var con = _db.CreateConnection(forumNewsgroup.BaseGroupName, forumNewsgroup.SubGroupName))
+                WebServiceAnswers.Mapping map;
+                lock (forumNewsgroup)
                 {
-                    map = con.Mappings.FirstOrDefault(p => p.MessageNumber == articleNumber);
+                    using (var con = _db.CreateConnection(forumNewsgroup.BaseGroupName, forumNewsgroup.SubGroupName))
+                    {
+                        map = con.Mappings.FirstOrDefault(p => p.MessageNumber == articleNumber);
+                    }
                 }
+                if (map == null)
+                {
+                    return null;
+                }
+                return InternalGetMsgById(forumNewsgroup, map.MessageId, provider, map, (int)map.MessageNumber);
             }
-            if (map == null)
+            catch(Exception exp)
             {
-                return null;
+                Traces.Main_TraceEvent(TraceEventType.Error, 1,
+                                       "Error (GetForumListGetMessageByMsgNo) ({1} ({2}): {0})",
+                                       NNTPServer.Traces.ExceptionToString(exp), forumNewsgroup.GroupName, articleNumber);
             }
-            return InternalGetMsgById(forumNewsgroup, map.MessageId, provider, map, (int)map.MessageNumber);
+            return null;
         }
 
         private ForumArticle InternalGetMsgById(ForumNewsgroup forumNewsgroup, Guid id, /*IForumData provider,*/ SwaggerAccess provider, WebServiceAnswers.Mapping map, int msgNo)
@@ -2164,6 +2142,7 @@ namespace CommunityBridge2.Answers
         {
             if (ct == null) return null;
             var mt = new WebServiceAnswers.Swagger.Message();
+            mt.OptThread = ct;
             mt.ContentKey = ct.ContentKey;
             mt.MessageKey = ct.ContentKey;
             //mt.Counter = ct.Counters;
@@ -2175,35 +2154,35 @@ namespace CommunityBridge2.Answers
             return mt;
         }
 
-        private static void GetMetaDataString(int deep, MetaData metaData, StringBuilder result, List<string> subForumNames, string parentName)
-        {
-            string myNewsGroupName = parentName;
-            if (metaData.MetaDataTypes.Any(p => p.Id == MetaDataInfo.MetaValue))
-            {
-                myNewsGroupName += "." + metaData.ShortName;
-                subForumNames.Add(myNewsGroupName);
-            }
-            var deepStr = new string(' ', deep * 2);
-            result.AppendFormat("{0} {1:00} Short: '{2}' Display: '{3}' Locale: '{4}, Id: {5}<br/>", deepStr, deep, metaData.ShortName, metaData.DisplayName, metaData.LocaleName, metaData.Id);
-            foreach (var types in metaData.MetaDataTypes)
-            {
-                result.AppendFormat("{0}  {1:00} Type: {2}, Id: {3}<br/>", deepStr, deep, types.ShortName, types.Id);
-            }
-            foreach (var childMetaData in metaData.ChildMetaData)
-            {
-                GetMetaDataString(deep + 1, childMetaData, result, subForumNames, myNewsGroupName);
-            }
-        }
+        //private static void GetMetaDataString(int deep, MetaData metaData, StringBuilder result, List<string> subForumNames, string parentName)
+        //{
+        //    string myNewsGroupName = parentName;
+        //    if (metaData.MetaDataTypes.Any(p => p.Id == MetaDataInfo.MetaValue))
+        //    {
+        //        myNewsGroupName += "." + metaData.ShortName;
+        //        subForumNames.Add(myNewsGroupName);
+        //    }
+        //    var deepStr = new string(' ', deep * 2);
+        //    result.AppendFormat("{0} {1:00} Short: '{2}' Display: '{3}' Locale: '{4}, Id: {5}<br/>", deepStr, deep, metaData.ShortName, metaData.DisplayName, metaData.LocaleName, metaData.Id);
+        //    foreach (var types in metaData.MetaDataTypes)
+        //    {
+        //        result.AppendFormat("{0}  {1:00} Type: {2}, Id: {3}<br/>", deepStr, deep, types.ShortName, types.Id);
+        //    }
+        //    foreach (var childMetaData in metaData.ChildMetaData)
+        //    {
+        //        GetMetaDataString(deep + 1, childMetaData, result, subForumNames, myNewsGroupName);
+        //    }
+        //}
 
         public void SaveGroupFilterData(ForumNewsgroup g)
         {
-            if ((g.MetaDataInfo != null) && (g.MetaDataInfo.FilterIds != null))
+            if ((g.MetaDataInfo != null) && (g.MetaDataInfo.ShortNames != null))
             {
                 var sb = new StringBuilder();
-                foreach (var fd in g.MetaDataInfo.FilterIds)
+                foreach (var fd in g.MetaDataInfo.ShortNames)
                 {
                     if (sb.Length > 0) sb.Append(":");
-                    sb.Append(fd.ToString("D"));
+                    sb.Append(fd);
                 }
                 string fn = IniFile(g.BaseGroupName, "FilterData.ini");
                 IniHelper.SetString(g.GroupName.ToLowerInvariant(), "Name", g.MetaDataInfo.Name, fn);
@@ -2217,13 +2196,8 @@ namespace CommunityBridge2.Answers
             if (string.IsNullOrEmpty(s))
                 return null;
             string[] ids = s.Split(':');
-            Guid[] guids = new Guid[ids.Length];
-            for (int i = 0; i < ids.Length; i++)
-            {
-                guids[i] = Guid.ParseExact(ids[i], "D");
-            }
             var md = new MetaDataInfo();
-            md.FilterIds = guids;
+            md.ShortNames = ids;
             md.Name = IniHelper.GetString(groupName.ToLowerInvariant(), "Name", fn);
             return md;
         }
@@ -2235,7 +2209,7 @@ namespace CommunityBridge2.Answers
                 string fn = IniFile(g.BaseGroupName, "AllMetaData.ini");
                 foreach (var md in g.UniqueInfos)
                 {
-                    IniHelper.SetString(md.FilterIds[0].ToString("D"), "Name", md.Name, fn);
+                    IniHelper.SetString(md.ShortNames[0], "Name", md.Name, fn);
                 }
             }
         }
@@ -2249,7 +2223,8 @@ namespace CommunityBridge2.Answers
                 foreach (var s in sections)
                 {
                     var md = new MetaDataInfo();
-                    md.FilterIds = new[] { Guid.ParseExact(s, "D") };
+                    md.ShortNames = new[] { s };
+                    md.ShortNames = IniHelper.GetString(s, "FilterData", fn).Split(':');
                     md.Name = IniHelper.GetString(s, "Name", fn);
                     infos.Add(md);
                 }
@@ -2275,44 +2250,42 @@ namespace CommunityBridge2.Answers
     public class MetaDataInfo
     {
         public string Name;
-        public Guid[] FilterIds;
+        public string[] ShortNames;
 
-        private static Guid ForumFilterField = new Guid("f31897ff-5441-e011-9767-d8d385dcbb12");
-        private static Guid ThreadDataField = new Guid("f51897ff-5441-e011-9767-d8d385dcbb12");
-        internal static Guid MetaValue = new Guid("f41897ff-5441-e011-9767-d8d385dcbb12");
-
-        public static void GetMetaDataInfos(MetaData metaData, List<MetaDataInfo> uniqueInfos, MetaDataInfo parent)
+        public static void GetMetaDataInfos(MetaData2017 metaData, List<MetaDataInfo> uniqueInfos, MetaDataInfo parent)
         {
             MetaDataInfo myInfo = parent;
-            if (metaData.MetaDataTypes.Any(p => p.Id == MetaValue))
+            if (metaData.Type == 4)
             {
-                // INFO: This builds the meta-data as one subfolder with unique values
-                myInfo = new MetaDataInfo { Name = metaData.ShortName, FilterIds = new[] { metaData.Id } };
-                if (uniqueInfos.Any(p => p.FilterIds[0] == metaData.Id) == false)
+                if (metaData.Level == 1)
                 {
-                    uniqueInfos.Add(myInfo);
+                    // INFO: This builds the meta-data as one subfolder with unique values
+                    myInfo = new MetaDataInfo { Name = metaData.ShortName, ShortNames = new[] { metaData.ShortName } };
+                    if (uniqueInfos.Any(p => string.Equals(p.Name, myInfo.Name, StringComparison.OrdinalIgnoreCase)) == false)
+                    {
+                        uniqueInfos.Add(myInfo);
+                    }
                 }
-
-                // Optional: Build the sub-folders also...
-                if ((parent != null)
-                  && (parent.FilterIds.Length == 1)  // alternative: Restrict to max. 2 levels...
-                  )
-                {
-                    // INFO: This builds the meta-data like it is defined in the tree:
-                    string newName = parent.Name + "." + metaData.ShortName;
-                    var newIds = new List<Guid>();
-                    newIds.AddRange(parent.FilterIds);
-                    newIds.Add(metaData.Id);
-                    myInfo = new MetaDataInfo { Name = newName, FilterIds = newIds.ToArray() };
-                    uniqueInfos.Add(myInfo);
-                }
+                    // Optional: Build the sub-folders also...
+                    if ((parent != null)
+                      && (parent.ShortNames.Length == 1)  // alternative: Restrict to max. 2 levels...
+                      )
+                    {
+                        // INFO: This builds the meta-data like it is defined in the tree:
+                        string newName = parent.Name + "." + metaData.ShortName;
+                        var newIds = new List<string>();
+                        newIds.AddRange(parent.ShortNames);
+                        newIds.Add(metaData.ShortName);
+                        myInfo = new MetaDataInfo { Name = newName, ShortNames = newIds.ToArray() };
+                        uniqueInfos.Add(myInfo);
+                    }
             }
-            foreach (var childMetaData in metaData.ChildMetaData)
+            if (metaData.Level > 2)  // restrict to 2 levels
+                return;
+            foreach (var childMetaData in metaData.Children)
             {
                 GetMetaDataInfos(childMetaData, uniqueInfos, myInfo);
             }
         }
-
     }  // class MetaDataInfo
-
 }

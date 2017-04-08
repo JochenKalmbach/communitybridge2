@@ -4393,7 +4393,7 @@ public interface IQnAChannel : IQnA, System.ServiceModel.IClientChannel
 
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-public partial class QnAClient : System.ServiceModel.ClientBase<IQnA>, IQnA, CommunityBridge2.WebServiceAnswers.IForumData
+public partial class QnAClient : System.ServiceModel.ClientBase<IQnA>, IQnA
 {
     
     public QnAClient()

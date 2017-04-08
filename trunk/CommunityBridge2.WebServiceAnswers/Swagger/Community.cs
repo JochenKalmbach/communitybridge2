@@ -1188,6 +1188,11 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
                             }
                         }
                         else
+                        if (status_ == "400")
+                        {
+                            var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new SwaggerException("Validation Errors", status_, responseData_, headers_, null);
+                        }
                         if (status_ != "200" && status_ != "204")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -1757,6 +1762,11 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
 
         [Newtonsoft.Json.JsonProperty("Counter", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public MessageCounter Counter { get; set; }
+
+        /// <summary>
+        /// Optional the thread
+        /// </summary>
+        public Content OptThread { get; set; }
 
         public string ToJson()
         {

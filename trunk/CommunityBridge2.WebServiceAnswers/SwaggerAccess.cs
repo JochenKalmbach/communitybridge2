@@ -51,15 +51,14 @@ namespace CommunityBridge2.WebServiceAnswers
         #endregion
 
         #region  GetMetaDataList (TODO)
-        public MetaData[] GetMetaDataListByForumId(Forum2017 forum, string localeName)
+        public MetaData2017[] GetMetaDataListByForumId(Forum2017 forum, string localeName)
         {
             Log?.Invoke($"GetMetaDataListByForumId: shortName={forum.ShortName}, locale={localeName}");
             var url = $"https://answers.microsoft.com/{localeName}/forum/filtermenu?forumName={forum.ShortName}";
             try
             {
                 var resp = GetResponse(url, System.Threading.CancellationToken.None).Result;
-                // TODO:
-                return new MetaData[0];
+                return resp.ToArray();
             }
             catch(AggregateException ae)
             {
@@ -70,7 +69,7 @@ namespace CommunityBridge2.WebServiceAnswers
         #endregion
 
         #region GetResponse (private)
-        private async Task<System.Collections.ObjectModel.ObservableCollection<object>> GetResponse(string url_, System.Threading.CancellationToken cancellationToken)
+        private async Task<System.Collections.ObjectModel.ObservableCollection<MetaData2017>> GetResponse(string url_, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = new System.Net.Http.HttpClient();
             try
@@ -91,10 +90,10 @@ namespace CommunityBridge2.WebServiceAnswers
                         if (status_ == "200")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            var result_ = default(System.Collections.ObjectModel.ObservableCollection<object>);
+                            var result_ = default(System.Collections.ObjectModel.ObservableCollection<MetaData2017>);
                             try
                             {
-                                result_ = Newtonsoft.Json.JsonConvert.DeserializeObject<System.Collections.ObjectModel.ObservableCollection<object>>(responseData_);
+                                result_ = Newtonsoft.Json.JsonConvert.DeserializeObject<System.Collections.ObjectModel.ObservableCollection<MetaData2017>>(responseData_);
                                 return result_;
                             }
                             catch (System.Exception exception)
@@ -109,7 +108,7 @@ namespace CommunityBridge2.WebServiceAnswers
                             throw new Swagger.SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null);
                         }
 
-                        return default(System.Collections.ObjectModel.ObservableCollection<object>);
+                        return default(System.Collections.ObjectModel.ObservableCollection<MetaData2017>);
                     }
                     finally
                     {
@@ -126,11 +125,16 @@ namespace CommunityBridge2.WebServiceAnswers
         }
         #endregion
 
-        public Swagger.PagedResultOfContent GetThreadListByForumId(Guid forumId, string forumShortName, string localeName, Guid[] metadataFilters, DateTime? since, /*ThreadFilter[] threadFilters,*/ ThreadSortOrder? sortOrder, SortDirection? sortDirection, int startRow, int maxRows, AdditionalThreadDataOptions additionalThreadDataOptions)
+        public Swagger.PagedResultOfContent GetThreadListByForumId(Guid forumId, string forumShortName, string localeName, string[] shortNames, DateTime? since, /*ThreadFilter[] threadFilters,*/ ThreadSortOrder? sortOrder, SortDirection? sortDirection, int startRow, int maxRows, AdditionalThreadDataOptions additionalThreadDataOptions)
         {
 
             var c = new Swagger.ThreadsClient();
             var filter = $"f0 eq '{forumShortName}' and languagelocale eq '{localeName}'";
+            if (shortNames != null && shortNames.Length > 0)
+            {
+                filter += $" and f1 eq '{shortNames[0]}'";
+
+            }
             if (since.HasValue)
             {
                 DateTimeOffset dto = since.Value;
@@ -266,6 +270,24 @@ namespace CommunityBridge2.WebServiceAnswers
         public string Locale { get; set; }
         public string ShortName { get; set; }
         public string DisplayName { get; set; }
+
+    }
+
+    public class MetaData2017
+    {
+        public Guid Id { get; set; }
+        public Guid ParentId { get; set; }
+        public string ShortName { get; set; }
+
+        public string DisplayName { get; set; }
+
+        public int Type { get; set; }
+
+        public int Level { get; set; }
+
+        public int Order { get; set; }
+
+        public List<MetaData2017> Children { get; set; } = new List<MetaData2017>();
 
     }
 

@@ -152,7 +152,14 @@ namespace CommunityBridge2
                 sb.AppendLine();
             }
 
-            Clipboard.SetText(sb.ToString());
+            try
+            {
+                Clipboard.SetText(sb.ToString());
+            }
+            catch(Exception exp)
+            {
+                Traces.Main_TraceEvent(TraceEventType.Error, 1, NNTPServer.Traces.ExceptionToString(exp));
+            }
         }
 
         private void cbConverters_Checked(object sender, RoutedEventArgs e)
@@ -183,7 +190,14 @@ namespace CommunityBridge2
             sb.AppendLine();
           }
 
-          Clipboard.SetText(sb.ToString());
+            try
+            {
+                Clipboard.SetText(sb.ToString());
+            }
+            catch (Exception exp)
+            {
+                Traces.Main_TraceEvent(TraceEventType.Error, 1, NNTPServer.Traces.ExceptionToString(exp));
+            }
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)

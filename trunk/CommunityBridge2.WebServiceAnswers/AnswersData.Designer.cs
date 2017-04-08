@@ -8,15 +8,15 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
-
 namespace CommunityBridge2.WebServiceAnswers
 {
     #region Contexts
@@ -98,6 +98,7 @@ namespace CommunityBridge2.WebServiceAnswers
         private ObjectSet<Version> _Versions;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
@@ -117,11 +118,11 @@ namespace CommunityBridge2.WebServiceAnswers
         }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
     
     /// <summary>
@@ -150,7 +151,8 @@ namespace CommunityBridge2.WebServiceAnswers
         }
 
         #endregion
-        #region Primitive Properties
+
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -167,7 +169,7 @@ namespace CommunityBridge2.WebServiceAnswers
             {
                 OnMessageIdChanging(value);
                 ReportPropertyChanging("MessageId");
-                _MessageId = StructuralObject.SetValidValue(value);
+                _MessageId = StructuralObject.SetValidValue(value, "MessageId");
                 ReportPropertyChanged("MessageId");
                 OnMessageIdChanged();
             }
@@ -191,7 +193,7 @@ namespace CommunityBridge2.WebServiceAnswers
             {
                 OnMessageNumberChanging(value);
                 ReportPropertyChanging("MessageNumber");
-                _MessageNumber = StructuralObject.SetValidValue(value);
+                _MessageNumber = StructuralObject.SetValidValue(value, "MessageNumber");
                 ReportPropertyChanged("MessageNumber");
                 OnMessageNumberChanged();
             }
@@ -215,7 +217,7 @@ namespace CommunityBridge2.WebServiceAnswers
             {
                 OnAuthorChanging(value);
                 ReportPropertyChanging("Author");
-                _Author = StructuralObject.SetValidValue(value, true);
+                _Author = StructuralObject.SetValidValue(value, true, "Author");
                 ReportPropertyChanged("Author");
                 OnAuthorChanged();
             }
@@ -239,7 +241,7 @@ namespace CommunityBridge2.WebServiceAnswers
             {
                 OnTitleChanging(value);
                 ReportPropertyChanging("Title");
-                _Title = StructuralObject.SetValidValue(value, true);
+                _Title = StructuralObject.SetValidValue(value, true, "Title");
                 ReportPropertyChanged("Title");
                 OnTitleChanged();
             }
@@ -263,7 +265,7 @@ namespace CommunityBridge2.WebServiceAnswers
             {
                 OnMetaDataChanging(value);
                 ReportPropertyChanging("MetaData");
-                _MetaData = StructuralObject.SetValidValue(value, true);
+                _MetaData = StructuralObject.SetValidValue(value, true, "MetaData");
                 ReportPropertyChanged("MetaData");
                 OnMetaDataChanged();
             }
@@ -289,7 +291,7 @@ namespace CommunityBridge2.WebServiceAnswers
                 {
                     OnIdChanging(value);
                     ReportPropertyChanging("Id");
-                    _Id = StructuralObject.SetValidValue(value);
+                    _Id = StructuralObject.SetValidValue(value, "Id");
                     ReportPropertyChanged("Id");
                     OnIdChanged();
                 }
@@ -314,7 +316,7 @@ namespace CommunityBridge2.WebServiceAnswers
             {
                 OnLastReplyDateChanging(value);
                 ReportPropertyChanging("LastReplyDate");
-                _LastReplyDate = StructuralObject.SetValidValue(value);
+                _LastReplyDate = StructuralObject.SetValidValue(value, "LastReplyDate");
                 ReportPropertyChanged("LastReplyDate");
                 OnLastReplyDateChanged();
             }
@@ -338,7 +340,7 @@ namespace CommunityBridge2.WebServiceAnswers
             {
                 OnThreadIdChanging(value);
                 ReportPropertyChanging("ThreadId");
-                _ThreadId = StructuralObject.SetValidValue(value);
+                _ThreadId = StructuralObject.SetValidValue(value, "ThreadId");
                 ReportPropertyChanged("ThreadId");
                 OnThreadIdChanged();
             }
@@ -362,7 +364,7 @@ namespace CommunityBridge2.WebServiceAnswers
             {
                 OnActivityDateChanging(value);
                 ReportPropertyChanging("ActivityDate");
-                _ActivityDate = StructuralObject.SetValidValue(value);
+                _ActivityDate = StructuralObject.SetValidValue(value, "ActivityDate");
                 ReportPropertyChanged("ActivityDate");
                 OnActivityDateChanged();
             }
@@ -386,7 +388,7 @@ namespace CommunityBridge2.WebServiceAnswers
             {
                 OnActivityActionChanging(value);
                 ReportPropertyChanging("ActivityAction");
-                _ActivityAction = StructuralObject.SetValidValue(value, true);
+                _ActivityAction = StructuralObject.SetValidValue(value, true, "ActivityAction");
                 ReportPropertyChanged("ActivityAction");
                 OnActivityActionChanged();
             }
@@ -396,7 +398,7 @@ namespace CommunityBridge2.WebServiceAnswers
         partial void OnActivityActionChanged();
 
         #endregion
-    
+
     }
     
     /// <summary>
@@ -423,7 +425,8 @@ namespace CommunityBridge2.WebServiceAnswers
         }
 
         #endregion
-        #region Primitive Properties
+
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -442,7 +445,7 @@ namespace CommunityBridge2.WebServiceAnswers
                 {
                     OnIdChanging(value);
                     ReportPropertyChanging("Id");
-                    _Id = StructuralObject.SetValidValue(value);
+                    _Id = StructuralObject.SetValidValue(value, "Id");
                     ReportPropertyChanged("Id");
                     OnIdChanged();
                 }
@@ -467,7 +470,7 @@ namespace CommunityBridge2.WebServiceAnswers
             {
                 OnVersion1Changing(value);
                 ReportPropertyChanging("Version1");
-                _Version1 = StructuralObject.SetValidValue(value);
+                _Version1 = StructuralObject.SetValidValue(value, "Version1");
                 ReportPropertyChanged("Version1");
                 OnVersion1Changed();
             }
@@ -477,9 +480,9 @@ namespace CommunityBridge2.WebServiceAnswers
         partial void OnVersion1Changed();
 
         #endregion
-    
+
     }
 
     #endregion
-    
+
 }

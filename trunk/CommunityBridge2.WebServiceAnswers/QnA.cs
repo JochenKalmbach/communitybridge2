@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace Microsoft.Support.Community.DataLayer.Entity
 {
     using System.Runtime.Serialization;
@@ -4391,7 +4393,7 @@ public interface IQnAChannel : IQnA, System.ServiceModel.IClientChannel
 
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-public partial class QnAClient : System.ServiceModel.ClientBase<IQnA>, IQnA
+public partial class QnAClient : System.ServiceModel.ClientBase<IQnA>, IQnA, CommunityBridge2.WebServiceAnswers.IForumData
 {
     
     public QnAClient()
@@ -4427,7 +4429,12 @@ public partial class QnAClient : System.ServiceModel.ClientBase<IQnA>, IQnA
     {
         return base.Channel.GetMetaDataListByForumId(forumId, localeName);
     }
-    
+
+    public Microsoft.Support.Community.DataLayer.Entity.MetaData[] GetMetaDataListByForumId(Microsoft.Support.Community.DataLayer.Entity.Forum forum, string localeName)
+    {
+        return GetMetaDataListByForumId(forum.Id, localeName);
+    }
+
     public Microsoft.Support.Community.DataLayer.Entity.Forum GetForum(System.Guid forumId, string localeName)
     {
         return base.Channel.GetForum(forumId, localeName);
@@ -4437,8 +4444,13 @@ public partial class QnAClient : System.ServiceModel.ClientBase<IQnA>, IQnA
     {
         return base.Channel.GetThreadListByForumId(forumId, localeName, metadataFilters, threadFilters, sortOrder, sortDirection, startRow, maxRows, additionalThreadDataOptions);
     }
-    
-    public Microsoft.Support.Community.DataLayer.Entity.Thread GetThread(System.Guid threadId, Microsoft.Support.Community.DataLayer.Entity.AdditionalThreadDataOptions additionalThreadDataOptions)
+
+    public Microsoft.Support.Community.DataLayer.Entity.PagedForumThreadList GetThreadListByForumId(System.Guid forumId, string shortName, string localeName, System.Guid[] metadataFilters, Microsoft.Support.Community.DataLayer.Entity.ThreadFilter[] threadFilters, System.Nullable<Microsoft.Support.Community.DataLayer.Entity.ThreadSortOrder> sortOrder, System.Nullable<Microsoft.Support.Community.DataLayer.Entity.SortDirection> sortDirection, int startRow, int maxRows, Microsoft.Support.Community.DataLayer.Entity.AdditionalThreadDataOptions additionalThreadDataOptions)
+    {
+        return GetThreadListByForumId(forumId, localeName, metadataFilters, threadFilters, sortOrder, sortDirection, startRow, maxRows, additionalThreadDataOptions);
+    }
+
+public Microsoft.Support.Community.DataLayer.Entity.Thread GetThread(System.Guid threadId, Microsoft.Support.Community.DataLayer.Entity.AdditionalThreadDataOptions additionalThreadDataOptions)
     {
         return base.Channel.GetThread(threadId, additionalThreadDataOptions);
     }
@@ -4476,5 +4488,9 @@ public partial class QnAClient : System.ServiceModel.ClientBase<IQnA>, IQnA
     public string[] GetSupportedLocales()
     {
         return base.Channel.GetSupportedLocales();
+    }
+
+    public void UpdateAuthTicket(string ticket)
+    {
     }
 }

@@ -4,11 +4,11 @@ using System.Windows;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information// associated with an assembly.
-[assembly: AssemblyTitle("Community Bridge 2")]
+[assembly: AssemblyTitle("Community Bridge 2-swagger")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Community Bridge 2")]
+[assembly: AssemblyProduct("Community Bridge 2-swagger")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -49,5 +49,5 @@ using System.Windows;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 // INFO: YES, I am aware that this version umber is not compatible with COM ;)
-[assembly: AssemblyVersion("1.0.22.0")]
-[assembly: AssemblyFileVersion("1.0.22.0")]
+[assembly: AssemblyVersion("2.1.0.0")]
+[assembly: AssemblyFileVersion("2.1.0.0")]

@@ -48,7 +48,7 @@ namespace CommunityBridge2
           Scopes = "wl.signin wl.offline_access";
           ClientId = "000000004C108A13";
 
-          BasePath = @"%AppData%\Community\CommunityBridge2";
+          BasePath = @"%AppData%\Community\CommunityBridge2.1";
           BasePath = Environment.ExpandEnvironmentVariables(BasePath);
           if (Directory.Exists(BasePath) == false)
           {
@@ -56,6 +56,7 @@ namespace CommunityBridge2
           }
 
           MaxThreadCountOnFirstRetrival = 300;
+            UpdateAsync = true;
         }
 
         public UserSettings Clone()
@@ -103,6 +104,8 @@ namespace CommunityBridge2
           u._updateInfoMode = this._updateInfoMode;
           u.MessageInfos = this.MessageInfos;
           u.SendSupersedesHeader = this.SendSupersedesHeader;
+
+            u.UpdateAsync = this.UpdateAsync;
 
             return u;
         }
@@ -334,6 +337,11 @@ namespace CommunityBridge2
                   b = GetBoolean(r, "SendSupersedesHeader");
                   if (b.HasValue)
                     SendSupersedesHeader = b.Value;
+
+                    b = GetBoolean(r, "UpdateAsync");
+                    if (b.HasValue)
+                        UpdateAsync = b.Value;
+
                 }
             }
             catch (Exception exp)
@@ -419,8 +427,10 @@ namespace CommunityBridge2
                 SetEnum(r, "MessageInfos", MessageInfos);
 
                 SetBoolean(r, "SendSupersedesHeader", SendSupersedesHeader);
-              }
-            }
+
+                        SetBoolean(r, "UpdateAsync", UpdateAsync);
+                    }
+                }
             catch (Exception exp)
             {
               Traces.Main_TraceEvent(TraceEventType.Critical, 1, "Error saving settings to the registry: {0}",
@@ -926,7 +936,11 @@ namespace CommunityBridge2
         BasedOnLastActivity,
       }
 
-      [Category("Messages")]
+        [Category("General")]
+        [DefaultValue(true)]
+        public bool UpdateAsync { get; set; }
+
+        [Category("Messages")]
       public bool SendSupersedesHeader { get; set; }
 
       public enum MessageInfoEnum

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Threading;
 
 namespace CommunityBridge2.WebServiceAnswers
 {
@@ -126,16 +127,16 @@ namespace CommunityBridge2.WebServiceAnswers
       }
       return fn;
     }
-    public System.Data.SqlServerCe.SqlCeConnection CreateSqlCeConnection(string baseGroupName, string subName, bool createDatabaseIfItDoesNotExist = true)
-    {
-      string fn = GetSqlCeDbFileName(baseGroupName, subName, createDatabaseIfItDoesNotExist);
-      if (fn == null)
-        return null;
+    //public System.Data.SqlServerCe.SqlCeConnection CreateSqlCeConnection(string baseGroupName, string subName, bool createDatabaseIfItDoesNotExist = true)
+    //{
+    //  string fn = GetSqlCeDbFileName(baseGroupName, subName, createDatabaseIfItDoesNotExist);
+    //  if (fn == null)
+    //    return null;
 
-      var conStr = CeNativeConnectionString.Replace("###DATABASE###", fn);
+    //  var conStr = CeNativeConnectionString.Replace("###DATABASE###", fn);
 
-      return new System.Data.SqlServerCe.SqlCeConnection(conStr);
-    }
+    //  return new System.Data.SqlServerCe.SqlCeConnection(conStr);
+    //}
     public AnswersDataEntities CreateConnection(string baseGroupName, string subName, bool createDatabaseIfItDoesNotExist = true)
     {
       string fn = GetSqlCeDbFileName(baseGroupName, subName, createDatabaseIfItDoesNotExist);
@@ -144,9 +145,40 @@ namespace CommunityBridge2.WebServiceAnswers
 
       var conStr = CeConnectionString.Replace("###DATABASE###", fn);
 
-      return new AnswersDataEntities(conStr);
+      var a = new AnswersDataEntities(conStr);
+            a.Mutex = GetLockObjectAndLock(fn);
+            return a;
     }
-  }
+        private static Dictionary<string, Mutex> _Locks = new Dictionary<string, Mutex>(StringComparer.OrdinalIgnoreCase);
+        private Mutex GetLockObjectAndLock(string name)
+        {
+            Mutex m;
+            lock(_Locks)
+            {
+                if (_Locks.ContainsKey(name))
+                {
+                    m = _Locks[name];
+                }
+                _Locks[name] = new Mutex(false);
+                m = _Locks[name];
+            }
+            // get the mutex...
+            m.WaitOne();
+            return m;
+        }
+    }
+    public partial class AnswersDataEntities
+    {
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (disposing)
+            {
+                Mutex?.ReleaseMutex();
+            }
+        }
+        internal Mutex Mutex;
+    }
 }
 namespace Microsoft.Support.Community.DataLayer.Entity
 {

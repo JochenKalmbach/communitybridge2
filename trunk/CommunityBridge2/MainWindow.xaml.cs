@@ -56,94 +56,17 @@ namespace CommunityBridge2
         {
           lblInfo.Text = "Server started.";
           cmdStart.Content = "Stop";
-          //StartWlidAutoRefresh();
         }
         else
         {
           lblInfo.Text = "Server stopped.";
           cmdStart.Content = "Start";
-          //StopWlidAutoRefresh();
         }
         RaisePropertyChanged("Started");
       }
     }
 
-    //#region WLID auto refresh
-
-    private volatile Microsoft.Support.Community.CpsAuthHeaderBehavior _answersAuthHeader;
-
-    //private System.Threading.AutoResetEvent _cyclingWlidEndEvent;
-    //private System.Threading.Thread _cyclingWlidThread;
-    //void StartWlidAutoRefresh()
-    //{
-    //  if (_cyclingWlidEndEvent == null)
-    //  {
-    //    _cyclingWlidEndEvent = new AutoResetEvent(false);
-    //  }
-    //  _cyclingWlidEndEvent.Reset();  // Be sure the event is not set
-
-    //  // Start here a LiveId auto-refresh thread:
-    //  _cyclingWlidThread = new Thread(WlidAutoRefreshThread);
-    //  _cyclingWlidThread.IsBackground = true;
-    //  _cyclingWlidThread.Start();
-    //}
-    //void StopWlidAutoRefresh()
-    //{
-    //  _cyclingWlidEndEvent.Set();
-    //  _cyclingWlidThread.Join();
-    //  _cyclingWlidThread = null;
-    //}
-
-
-    //const string answerServiceName = "cpslite.community.services.support.microsoft.com";
-    //void WlidAutoRefreshThread()
-    //{
-    //  while (_cyclingWlidEndEvent.WaitOne(new TimeSpan(0, 57, 0)) == false)  // refresh every 57 minutes
-    //  {
-    //    var identity = PassportHelper.CurrentIdentity;
-    //    var authHeader = _answersAuthHeader;
-    //    if ((authHeader != null) && (identity != null))
-    //    {
-    //      Traces.Main_TraceEvent(TraceEventType.Verbose, 1, "LiveId: Try auto-re-authentication");
-    //      bool suceeded = false;
-    //      var authenticationData = new AuthenticationInformation();
-    //      try
-    //      {
-    //        suceeded = PassportHelper.ReAuthenticateSilent(identity, ref authenticationData,
-    //                                                       answerServiceName, "MBI",
-    //                                                       true);
-    //      }
-    //      catch (Exception exp)
-    //      {
-    //        Traces.Main_TraceEvent(TraceEventType.Error, 1, "LiveId: Re-Authenticate failed: {0}", NNTPServer.Traces.ExceptionToString(exp));
-    //      }
-    //      if (suceeded && (authenticationData.Ticket != null))
-    //      {
-    //        Traces.Main_TraceEvent(TraceEventType.Verbose, 1, "LiveId: Re-Authenticate: UserName: {0}, Ticket: {1}",
-    //                               authenticationData.UserName, authenticationData.Ticket);
-
-    //        // Set the ticket in the Answer-WebService:
-    //        authHeader.UpdateTicket(authenticationData.Ticket);
-
-    //        // Also store the data (lob) in the UserSettings
-    //        if (string.IsNullOrEmpty(UserSettings.Default.AuthenticationBlob) == false)
-    //        {
-    //          UserSettings.Default.AuthenticationBlob = authenticationData.AuthBlob;
-    //          UserSettings.Default.Save();
-    //        }
-    //      }
-    //      else
-    //      {
-    //        // Reset the auto login, if the authentication has failed...
-    //        Traces.Main_TraceEvent(TraceEventType.Error, 1, "Could not re-authenticate with LiveId!");
-    //        //UserSettings.Default.AuthenticationBlob = string.Empty;
-    //        //throw new ApplicationException("Could not authenticate with LiveId!");
-    //      } // identity != null
-    //    } // while
-    //  }
-    //}  // WlidAutoRefreshThread
-
-    //#endregion
+    //private volatile Microsoft.Support.Community.CpsAuthHeaderBehavior _answersAuthHeader;
 
     public MainWindow()
     {
@@ -253,7 +176,6 @@ namespace CommunityBridge2
       if (int.TryParse(txtPort.Text, out parsedPort))
         port = parsedPort;
 
-      //bool detailedErrorResponse = UserSettings.Default.DetailedErrorResponse;
       string domainName = UserSettings.Default.DomainName;
 
       lblInfo.Text = "Starting server... please wait...";
@@ -301,7 +223,19 @@ namespace CommunityBridge2
     }
 
 
-    private static void StartBridgeInternal(MainWindow t, int port, string domainName)
+        //WebServiceAnswers.IForumData _Provider;
+        WebServiceAnswers.SwaggerAccess _Provider;
+
+        private static void SwaggerLog(string s)
+        {
+            Traces.WebService_TraceEvent(TraceEventType.Verbose, 1, s);
+        }
+        private static void SwaggerLogExp(string s, Exception exp)
+        {
+            Traces.WebService_TraceEvent(TraceEventType.Error, 1, "{0}:{1}{2}", s, Environment.NewLine, NNTPServer.Traces.ExceptionToString(exp));
+        }
+
+        private static void StartBridgeInternal(MainWindow t, int port, string domainName)
     {
       string authenticationTicket = null;
 
@@ -317,61 +251,49 @@ namespace CommunityBridge2
       }
       Traces.Main_TraceEvent(TraceEventType.Information, 1, "Authenticated: AccessToken: {0}", authenticationTicket);
 
-      //// Authenticate with Live Id
-      //var authenticationData = new AuthenticationInformation();
-      //Traces.Main_TraceEvent(TraceEventType.Verbose, 1, "LiveId: Try authentication");
-      //try
-      //{
-      //  PassportHelper.AuthenticateUser(UserSettings.Default.AuthenticationBlob, ref authenticationData,
-      //    answerServiceName, "MBI", true);
-      //}
-      //catch
-      //{
-      //  // Reset the auto login, if the authentication has failed...
-      //  UserSettings.Default.AuthenticationBlob = string.Empty;
-      //  throw;
-      //}
-      //Traces.Main_TraceEvent(TraceEventType.Verbose, 1, "LiveId: UserName: {0}, Ticket: {1}", authenticationData.UserName, authenticationData.Ticket);
-      //if (authenticationData.Ticket == null)
-      //{
-      //  // Reset the auto login, if the authentication has failed...
-      //  UserSettings.Default.AuthenticationBlob = string.Empty;
-      //  Traces.Main_TraceEvent(TraceEventType.Error, 1, "Could not authenticate with LiveId!");
-      //  throw new ApplicationException("Could not authenticate with LiveId!");
-      //}
-      //string authenticationTicket = authenticationData.Ticket;
-
       // Create the forums-ServiceProvider
       Traces.Main_TraceEvent(TraceEventType.Verbose, 1, "Create forums service provider: {0}", "social");
 
-      var provider = new QnAClient("httpLiveAuth");
-      if (provider.Endpoint.Behaviors.Contains(typeof(Microsoft.Support.Community.CpsAuthHeaderBehavior)))
-      {
-        provider.Endpoint.Behaviors.Remove(typeof(Microsoft.Support.Community.CpsAuthHeaderBehavior));
-      }
-      t._answersAuthHeader = new Microsoft.Support.Community.CpsAuthHeaderBehavior(authenticationTicket);
-      provider.Endpoint.Behaviors.Add(t._answersAuthHeader);
+#if true
+            var provider = new WebServiceAnswers.SwaggerAccess();
+            provider.UpdateAuthTicket(authenticationTicket);
 
-      foreach (var op in provider.Endpoint.Contract.Operations)
-      {
-        var dcsb =
-          op.Behaviors.Find<System.ServiceModel.Description.DataContractSerializerOperationBehavior>();
-        //if (dcsb == null)
-        //{
-        //  dcsb = new System.ServiceModel.Description.DataContractSerializerOperationBehavior(op);
-        //}
-        if (dcsb != null)
-        {
-          const int maxObj = 65536*100;
-          if (dcsb.MaxItemsInObjectGraph < maxObj)
-          dcsb.MaxItemsInObjectGraph = maxObj; // Default is 65536; increase it...
-          //dcsb.IgnoreExtensionDataObject = true;
-        }
-      }
+            WebServiceAnswers.SwaggerAccess.Log = SwaggerLog;
+            WebServiceAnswers.SwaggerAccess.LogExp = SwaggerLogExp;
+#else
+            WebServiceAnswers.IForumData provider = new QnAClient("httpLiveAuth");
+#endif
+            t._Provider = provider;
 
-      // Try to test the provider once:
-      try
-      {
+
+            //if (provider.Endpoint.Behaviors.Contains(typeof(Microsoft.Support.Community.CpsAuthHeaderBehavior)))
+            //{
+            //  provider.Endpoint.Behaviors.Remove(typeof(Microsoft.Support.Community.CpsAuthHeaderBehavior));
+            //}
+            //t._answersAuthHeader = new Microsoft.Support.Community.CpsAuthHeaderBehavior(authenticationTicket);
+            //provider.Endpoint.Behaviors.Add(t._answersAuthHeader);
+
+            //foreach (var op in provider.Endpoint.Contract.Operations)
+            //{
+            //  var dcsb =
+            //    op.Behaviors.Find<System.ServiceModel.Description.DataContractSerializerOperationBehavior>();
+            //  //if (dcsb == null)
+            //  //{
+            //  //  dcsb = new System.ServiceModel.Description.DataContractSerializerOperationBehavior(op);
+            //  //}
+            //  if (dcsb != null)
+            //  {
+            //    const int maxObj = 65536*100;
+            //    if (dcsb.MaxItemsInObjectGraph < maxObj)
+            //    dcsb.MaxItemsInObjectGraph = maxObj; // Default is 65536; increase it...
+            //    //dcsb.IgnoreExtensionDataObject = true;
+            //  }
+            //}
+
+
+            // Try to test the provider once:
+            try
+            {
         provider.GetSupportedLocales();
       }
       catch (Exception exp)
@@ -411,7 +333,7 @@ namespace CommunityBridge2
       }
     }
 
-    #region Live Connect 
+#region Live Connect 
       private string _AccessToken;
       internal string AccessToken
       {
@@ -420,18 +342,11 @@ namespace CommunityBridge2
         {
           _AccessToken = value;
 
-          var authHeader = _answersAuthHeader;
-          if (authHeader != null)
-          {
-            authHeader.UpdateTicket(_AccessToken);
-          }
-          //// Update the AuthenticationTicket
-          //if (this._forumsProviders != null)
+                _Provider?.UpdateAuthTicket(_AccessToken);
+          //var authHeader = _answersAuthHeader;
+          //if (authHeader != null)
           //{
-          //  foreach (MicrosoftForumsServiceProvider f in _forumsProviders)
-          //  {
-          //    f.AuthenticationTicket = _AccessToken;
-          //  }
+          //  authHeader.UpdateTicket(_AccessToken);
           //}
         }
       }
@@ -687,7 +602,7 @@ namespace CommunityBridge2
           Handle = new WindowInteropHelper(wpfWindow).Handle;
         }
       }    
-    #endregion
+#endregion
 
     void _forumsDataSource_ProgressData(object sender, ProgressDataEventArgs e)
     {
@@ -965,7 +880,7 @@ namespace CommunityBridge2
       Close();
     }
 
-    #region Win32
+#region Win32
     //private const int GWL_STYLE = -16;
     //private const int WS_SYSMENU = 0x80000;
     //[DllImport("user32.dll", SetLastError = true)]
@@ -991,9 +906,9 @@ namespace CommunityBridge2
       //RemoveMenu(hMenu, menuItemCount - 1, MF_BYPOSITION);
       RemoveMenu(hMenu, SC_CLOSE, MF_BYCOMMAND);
     }
-    #endregion
+#endregion
 
-    #region NewsgroupList
+#region NewsgroupList
 
     private void SaveUICache(NewsgroupAnswersCollection groups)
     {
@@ -1168,7 +1083,7 @@ namespace CommunityBridge2
       get { return _filterInfo; }
     }
 
-    #endregion
+#endregion
 
     public event PropertyChangedEventHandler PropertyChanged;
     void RaisePropertyChanged(string name)

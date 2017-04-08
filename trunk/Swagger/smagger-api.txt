@@ -1,0 +1,1439 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1",
+    "title": "Microsoft Support Community Platform"
+  },
+  "host": "community.support.microsoft.com",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/api/threads/{threadkey}/counters": {
+      "patch": {
+        "tags": [
+          "ContentStatistics"
+        ],
+        "summary": "Records thread statistics.",
+        "operationId": "ContentStatistics_RecordThreadStatisticsAsync",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "threadkey",
+            "in": "path",
+            "description": "The thread key.",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "recordContentStatistics",
+            "in": "body",
+            "description": "The record page view entity.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RecordContentStatistics"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/dictionaryitems": {
+      "get": {
+        "tags": [
+          "Dictionary"
+        ],
+        "summary": "Gets the DictionaryItems based on the provided keys.",
+        "operationId": "Dictionary_GetDictionaryItems",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "keys",
+            "in": "query",
+            "description": "Comma seperated list of keys.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/IResource"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/forums/{languageLocale}": {
+      "get": {
+        "tags": [
+          "Forum"
+        ],
+        "summary": "Get forums for current user",
+        "operationId": "Forum_GetForumsByLocaleAsync",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "languageLocale",
+            "in": "path",
+            "description": "The language locale",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/IResource"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/threads/{threadkey}/messages/{messagekey}": {
+      "get": {
+        "tags": [
+          "Message"
+        ],
+        "summary": "For the specified thread in the thread collection, gets a message with the specified message key.",
+        "operationId": "Message_Get",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "threadkey",
+            "in": "path",
+            "description": "The thread key.",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "messagekey",
+            "in": "path",
+            "description": "The message key.",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/IResource"
+            }
+          }
+        }
+      }
+    },
+    "/api/messages": {
+      "post": {
+        "tags": [
+          "Message"
+        ],
+        "summary": "Creates a message.",
+        "operationId": "Message_CreateAsync",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "message",
+            "in": "body",
+            "description": "The Message instance.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message Created Successfully",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "Validation Errors"
+          },
+          "403": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    },
+    "/api/threads/{threadkey}/messages/{messagekey}/counters/{counter}": {
+      "patch": {
+        "tags": [
+          "Message"
+        ],
+        "summary": "Update message counter",
+        "operationId": "Message_UpdateCounter",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "threadkey",
+            "in": "path",
+            "description": "The thread key",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "messagekey",
+            "in": "path",
+            "description": "The message key",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "counter",
+            "in": "path",
+            "description": "The counter name",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/threads/{threadkey}/messages": {
+      "get": {
+        "tags": [
+          "Message"
+        ],
+        "summary": "For the specified thread in the thread collection, gets list of all messages",
+        "operationId": "Message_GetList",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "threadkey",
+            "in": "path",
+            "description": "The thread key.",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "messagekey",
+            "in": "query",
+            "description": "Optional message key for which message page needs to be pulled.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "paging.start",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "paging.count",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sorting.orderBy",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sorting.direction",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "enum": [
+              0,
+              1
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PagedResult[IResource]"
+            }
+          }
+        }
+      }
+    },
+    "/api/threads/{threadkey}/messages/{messagekey}/counter": {
+      "get": {
+        "tags": [
+          "Message"
+        ],
+        "summary": "Get message counter for given message within given thread",
+        "operationId": "Message_GetCounter",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "threadkey",
+            "in": "path",
+            "description": "The thread key",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "messagekey",
+            "in": "path",
+            "description": "The message key",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/threads/{threadKey}/messages/{messageKey}": {
+      "patch": {
+        "tags": [
+          "Message"
+        ],
+        "summary": "Updates message by applying a series of Message actions.",
+        "operationId": "Message_PerformMessageActionsAsync",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "threadKey",
+            "in": "path",
+            "description": "Thread key underwhich the Message resides.",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "messageKey",
+            "in": "path",
+            "description": "MessageKey to apply actions on.",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "messageAction",
+            "in": "body",
+            "description": "Message Action object - MessageActionType and Attributes",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MessageAction"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Content Updated Successfully",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "Validation Errors"
+          },
+          "403": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    },
+    "/api/search": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Queries the content",
+        "operationId": "Search_Query",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "$filter",
+            "in": "query",
+            "description": "Filter options based on OData expression syntax https://docs.microsoft.com/en-us/rest/api/searchservice/odata-expression-syntax-for-azure-search",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "$orderBy",
+            "in": "query",
+            "description": "Order by OData expression syntax",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "description": "Top",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "$skip",
+            "in": "query",
+            "description": "Skip",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "$search",
+            "in": "query",
+            "description": "Search Term",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PagedResult[Content]"
+            }
+          }
+        }
+      }
+    },
+    "/api/threads/{key}": {
+      "get": {
+        "tags": [
+          "Threads"
+        ],
+        "summary": "Retrieves Content / Thread for the given key.",
+        "operationId": "Threads_GetAsync",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "description": "Thread Key of type {System.Guid}",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Content"
+            }
+          },
+          "400": {
+            "description": "Validation Errors"
+          },
+          "403": {
+            "description": "Access Denied for the Content"
+          },
+          "404": {
+            "description": "Content Not Found"
+          }
+        }
+      }
+    },
+    "/api/threads": {
+      "get": {
+        "tags": [
+          "Threads"
+        ],
+        "summary": "Queries the content",
+        "operationId": "Threads_QueryAsync",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "$filter",
+            "in": "query",
+            "description": "Filter options based on OData expression syntax https://docs.microsoft.com/en-us/rest/api/searchservice/odata-expression-syntax-for-azure-search",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "$orderBy",
+            "in": "query",
+            "description": "Order by OData expression syntax",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "description": "Top",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "$skip",
+            "in": "query",
+            "description": "Skip",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PagedResult[Content]"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Threads"
+        ],
+        "summary": "Creates a new thread / content after validation",
+        "operationId": "Threads_CreateAsync",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "content",
+            "in": "body",
+            "description": "Content object {Microsoft.Support.Community.Services.CommunityApi.Presentation.Content}",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Content"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Content Created Successfully",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "Validation Errors"
+          },
+          "403": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    },
+    "/api/threads/subscribers": {
+      "get": {
+        "tags": [
+          "Threads"
+        ],
+        "summary": "Get the list of subscribers who have Subscribed to the Contentkeys",
+        "operationId": "Threads_GetSubscribersAsync",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "keys",
+            "in": "query",
+            "description": "string representing comma delimited content keys",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/IResource"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/threads/{threadKey}": {
+      "patch": {
+        "tags": [
+          "Threads"
+        ],
+        "summary": "Updates content by applying a content action.",
+        "operationId": "Threads_PerformContentActionsAsync",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "threadKey",
+            "in": "path",
+            "description": "Thread key to apply actions on.",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "name": "contentAction",
+            "in": "body",
+            "description": "{Microsoft.Support.Community.Services.CommunityApi.Presentation.ContentAction} entity with required attributes set.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ContentAction"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Content Updated Successfully",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "Validation Errors"
+          },
+          "403": {
+            "description": "Access Denied"
+          }
+        }
+      }
+    },
+    "/api/users/{key}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Gets User by user id.",
+        "operationId": "User_Get",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "description": "The key.",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Validation Errors"
+          },
+          "403": {
+            "description": "Access Denied to view the user"
+          },
+          "404": {
+            "description": "User Not Found"
+          }
+        }
+      }
+    },
+    "/api/users": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Queries the User.",
+        "operationId": "User_Query",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "$filter",
+            "in": "query",
+            "description": "Filter options based on OData expression syntax.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "RecordContentStatistics": {
+      "type": "object",
+      "properties": {
+        "ContentType": {
+          "format": "int32",
+          "enum": [
+            0,
+            1,
+            2
+          ],
+          "type": "integer"
+        },
+        "ContentKey": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "StatisticsType": {
+          "format": "int32",
+          "enum": [
+            0,
+            1,
+            2
+          ],
+          "type": "integer"
+        },
+        "ForumId": {
+          "format": "uuid",
+          "type": "string"
+        }
+      }
+    },
+    "IResource": {
+      "type": "object",
+      "properties": {}
+    },
+    "Message": {
+      "type": "object",
+      "properties": {
+        "MessageKey": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "CreatedBy": {
+          "$ref": "#/definitions/User"
+        },
+        "CreatedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "HelpfulVoteCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "IsHidden": {
+          "type": "boolean"
+        },
+        "IsDeleted": {
+          "type": "boolean"
+        },
+        "IsAnswer": {
+          "type": "boolean"
+        },
+        "Properties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "Text": {
+          "type": "string"
+        },
+        "ModifiedBy": {
+          "$ref": "#/definitions/User"
+        },
+        "ModifiedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "ReplyToMessageKey": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "ContentKey": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "Counter": {
+          "$ref": "#/definitions/MessageCounter"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "Key": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "DisplayName": {
+          "type": "string"
+        },
+        "FolderId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "Affiliations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Awards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserAward"
+          }
+        },
+        "Roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserRole"
+          }
+        },
+        "CreatedByUserKey": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "ModifiedByUserKey": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "CreatedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "Email": {
+          "type": "string"
+        },
+        "ModifiedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "Signature": {
+          "type": "string"
+        },
+        "IsMarkedAsAbused": {
+          "type": "boolean"
+        },
+        "IsImageHidden": {
+          "type": "boolean"
+        },
+        "IsProfileHidden": {
+          "type": "boolean"
+        },
+        "IsDeleted": {
+          "type": "boolean"
+        },
+        "InSpamReview": {
+          "type": "boolean"
+        },
+        "IsRetired": {
+          "type": "boolean"
+        },
+        "IsBanned": {
+          "type": "boolean"
+        },
+        "UserLocale": {
+          "type": "string"
+        },
+        "Authentications": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserAuthentication"
+          }
+        },
+        "EmailNotificationFlag": {
+          "type": "boolean"
+        },
+        "DateCheckedWindowsInsider": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "BestBetsSearchEnabled": {
+          "type": "boolean"
+        },
+        "UserPreference": {
+          "$ref": "#/definitions/UserPreference"
+        },
+        "UserProfileImageCoordinates": {
+          "$ref": "#/definitions/UserProfileImageCoordinates"
+        }
+      }
+    },
+    "MessageCounter": {
+      "type": "object",
+      "properties": {
+        "ContentKey": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "MessageKey": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "HelpfulVotes": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "UnhelpfulVotes": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "SolutionVotes": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "AnonymousSolutionVotes": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "Replies": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "AbuseReports": {
+          "format": "int64",
+          "type": "integer"
+        }
+      }
+    },
+    "UserAward": {
+      "type": "object",
+      "properties": {
+        "ForumId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "AwardName": {
+          "type": "string"
+        }
+      }
+    },
+    "UserRole": {
+      "type": "object",
+      "properties": {
+        "ForumId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "ForumShortName": {
+          "type": "string"
+        },
+        "RoleName": {
+          "type": "string"
+        }
+      }
+    },
+    "UserAuthentication": {
+      "type": "object",
+      "properties": {
+        "AuthenticationProvider": {
+          "type": "string"
+        },
+        "ExternalId": {
+          "type": "string"
+        }
+      }
+    },
+    "UserPreference": {
+      "type": "object",
+      "properties": {
+        "SubscribedOnReply": {
+          "type": "boolean"
+        },
+        "ShowAdvancedThreadListFilters": {
+          "type": "boolean"
+        },
+        "ShowThreadPreview": {
+          "type": "boolean"
+        },
+        "ShowThreadPreviewCount": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "UserProfileImageCoordinates": {
+      "type": "object",
+      "properties": {
+        "X1Coordinate": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Y1Coordinate": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "X2Coordinate": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Y2Coordinate": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "PagingParameters": {
+      "type": "object",
+      "properties": {
+        "Start": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "Count": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "SortParameters": {
+      "type": "object",
+      "properties": {
+        "OrderBy": {
+          "type": "string"
+        },
+        "Direction": {
+          "format": "int32",
+          "enum": [
+            0,
+            1
+          ],
+          "type": "integer"
+        }
+      }
+    },
+    "PagedResult[IResource]": {
+      "type": "object",
+      "properties": {
+        "Items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IResource"
+          },
+          "readOnly": true
+        },
+        "Count": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "TotalResultCount": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "Start": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        }
+      }
+    },
+    "MessageAction": {
+      "type": "object",
+      "properties": {
+        "Action": {
+          "format": "int32",
+          "enum": [
+            1,
+            2,
+            3,
+            4,
+            9,
+            10,
+            11,
+            12,
+            17,
+            18,
+            19,
+            23,
+            24,
+            27,
+            28,
+            29,
+            30,
+            32,
+            35,
+            36,
+            37
+          ],
+          "type": "integer"
+        },
+        "Attributes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "PagedResult[Content]": {
+      "type": "object",
+      "properties": {
+        "Items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Content"
+          },
+          "readOnly": true
+        },
+        "Count": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "TotalResultCount": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "Start": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        }
+      }
+    },
+    "Content": {
+      "required": [
+        "ContentKey",
+        "LanguageLocale",
+        "Subject",
+        "ContentMessage"
+      ],
+      "type": "object",
+      "properties": {
+        "ContentKey": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "Metadata": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Metadata"
+          }
+        },
+        "LanguageLocale": {
+          "type": "string"
+        },
+        "AppliesToLabel": {
+          "type": "string"
+        },
+        "AppliesToValue": {
+          "type": "string"
+        },
+        "CreatedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "LastModifiedByUser": {
+          "$ref": "#/definitions/User"
+        },
+        "ModifiedDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "ContentProperties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "Subject": {
+          "type": "string"
+        },
+        "Tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ContentMessage": {
+          "type": "string"
+        },
+        "ContentType": {
+          "type": "string"
+        },
+        "Tenant": {
+          "type": "string"
+        },
+        "LastReplyUser": {
+          "$ref": "#/definitions/User"
+        },
+        "LastReplyDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "IsAnswered": {
+          "type": "boolean"
+        },
+        "IsSticky": {
+          "type": "boolean"
+        },
+        "ViewCount": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ReplyCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "ModeratorReplyCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "IsDeleted": {
+          "type": "boolean"
+        },
+        "IsHidden": {
+          "type": "boolean"
+        },
+        "IsAbuse": {
+          "type": "boolean"
+        },
+        "IsClosed": {
+          "type": "boolean"
+        },
+        "IsLocked": {
+          "type": "boolean"
+        },
+        "IsNoIndex": {
+          "type": "boolean"
+        },
+        "ContainsEmail": {
+          "type": "boolean"
+        },
+        "IsEmailObfuscated": {
+          "type": "boolean"
+        },
+        "AnsweredMessages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Message"
+          }
+        },
+        "MostHelpfulReply": {
+          "$ref": "#/definitions/Message"
+        },
+        "ForumId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "Counters": {
+          "$ref": "#/definitions/ContentCounter"
+        },
+        "CreatedByUser": {
+          "$ref": "#/definitions/User"
+        }
+      }
+    },
+    "Metadata": {
+      "type": "object",
+      "properties": {
+        "Key": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "LanguageLocale": {
+          "type": "string"
+        },
+        "DisplayName": {
+          "type": "string"
+        },
+        "ParentKey": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "ShortName": {
+          "type": "string"
+        },
+        "ParentShortName": {
+          "type": "string"
+        }
+      }
+    },
+    "ContentCounter": {
+      "type": "object",
+      "properties": {
+        "Answers": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ContentKey": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "HelpfulVotes": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "Interested": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "Replies": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "Subscribe": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "ViewCount": {
+          "format": "int64",
+          "type": "integer"
+        }
+      }
+    },
+    "ContentAction": {
+      "type": "object",
+      "properties": {
+        "Action": {
+          "format": "int32",
+          "enum": [
+            7,
+            8,
+            11,
+            13,
+            14,
+            15,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            31,
+            33,
+            34,
+            39,
+            85,
+            86
+          ],
+          "type": "integer"
+        },
+        "Attributes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+}

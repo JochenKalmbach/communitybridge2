@@ -867,19 +867,20 @@ namespace CommunityBridge2.Answers
                 subject = dbMap.Title;
                 if (string.IsNullOrEmpty(author) && (string.IsNullOrEmpty(dbMap.Author) == false))
                     author = dbMap.Author;
+            }
 
-                // Meta-Data-Info:
-                if ((metaInfo == UserSettings.MetaInfoDisplay.InSubject) ||
-                    (metaInfo == UserSettings.MetaInfoDisplay.InSubjectAndSignature))
+            // Meta-Data-Info:
+            if ((metaInfo == UserSettings.MetaInfoDisplay.InSubject) ||
+                (metaInfo == UserSettings.MetaInfoDisplay.InSubjectAndSignature))
+            {
+                if (msg.OptThread != null && msg.OptThread.Metadata != null)
                 {
-                    if (msg.OptThread != null && msg.OptThread.Metadata != null)
-                    { 
-                        string metaDataAsString = GetMetaDataString(g, msg.OptThread.Metadata);
-                        if (string.IsNullOrEmpty(metaDataAsString) == false)
-                            subject = "[" + metaDataAsString + "] " + subject;
-                    }
+                    string metaDataAsString = GetMetaDataString(g, msg.OptThread.Metadata);
+                    if (string.IsNullOrEmpty(metaDataAsString) == false)
+                        subject = "[" + metaDataAsString + "] " + subject;
                 }
             }
+
 
             if (string.IsNullOrEmpty(author))
                 author = "Unknown <null>";
@@ -938,9 +939,9 @@ namespace CommunityBridge2.Answers
             {
                 subject = subject.Replace("\n", string.Empty).Replace("\r", string.Empty);
 
-
                 if (msg.ContentKey.Value != msg.MessageKey)
                 {
+                    // It is a reply
                     Subject = "Re: " + subject;
                 }
                 else
@@ -996,7 +997,17 @@ namespace CommunityBridge2.Answers
             // URL: Build an URL for this discussion thread
             //string url = string.Format("http://answers.microsoft.com/message/{0}", Guid);
             // https://answers.microsoft.com/de-de/windowslive/forum/moviemaker-wlinstall/ton-aber-kein-bild/ca87088c-3c83-48a2-9b94-3f4c2a457f78
-            string url = string.Format("https://answers.microsoft.com/{0}/{1}/forum/x/y/{2}", g.Locale, g.ShortName, msg.ContentKey.Value);
+            string url;
+            if (msg.ContentKey.Value != msg.MessageKey)
+            {
+                // It is a message
+                url = string.Format("https://answers.microsoft.com/message/{1}?pid={0} ", msg.ContentKey.Value, msg.MessageKey.Value);
+            }
+            else
+            {
+                // It is the main thread
+                url = string.Format("https://answers.microsoft.com/{0}/{1}/forum/x/y/{2}", g.Locale, g.ShortName, msg.ContentKey.Value);
+            }
             ArchivedAt = "<" + url + ">";
 
             if (msg.CreatedBy != null)
@@ -1122,6 +1133,13 @@ namespace CommunityBridge2.Answers
                     string metaDataAsString = GetMetaDataString(g, msg.OptThread.Metadata);
                     if (string.IsNullOrEmpty(metaDataAsString) == false)
                         mhStr.Append("Meta tags: " + metaDataAsString + "<br/>");
+
+                    string str2 = GetAppliesToString(msg.OptThread);
+                    if (string.IsNullOrEmpty(str2) == false)
+                    {
+                        mhStr.Append("AppliesTo: " + str2 + "<br/>");
+                    }
+
                 }
             }
 
@@ -1274,6 +1292,15 @@ namespace CommunityBridge2.Answers
                         sb.Append(idStr.ShortName);
             }
             return sb.ToString();
+        }
+
+        private static string GetAppliesToString(WebServiceAnswers.Swagger.Content ct)
+        {
+            if (!string.IsNullOrEmpty(ct.AppliesToLabel) && !string.IsNullOrEmpty(ct.AppliesToValue))
+            {
+                return ct.AppliesToLabel + "(" + ct.AppliesToValue + ")";
+            }
+            return null;
         }
 
 
@@ -1894,7 +1921,7 @@ namespace CommunityBridge2.Answers
             }
             string[] shortNames = null;
             if (group.MetaDataInfo != null)
-                shortNames = new[] { group.MetaDataInfo.Name };
+                shortNames = group.MetaDataInfo.ShortNames;
 
             var resThreads = new Dictionary<Guid, WebServiceAnswers.Swagger.Content>();
 

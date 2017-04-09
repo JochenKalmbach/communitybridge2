@@ -11,6 +11,10 @@ namespace CommunityBridge2.WebServiceAnswers
 {
     public class SwaggerAccess //: IForumData
     {
+        static SwaggerAccess()
+        {
+            FillDict();
+        }
         public static Action<string> Log { get; set; }
         public static Action<string, Exception> LogExp;
 
@@ -32,6 +36,36 @@ namespace CommunityBridge2.WebServiceAnswers
         #endregion
 
         #region GetForumList
+
+        public static Dictionary<string, string> _CorrectNames = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+        private static void FillDict()
+        {
+            _CorrectNames.Add("band", "band");
+            _CorrectNames.Add("insider", "insider");
+            _CorrectNames.Add("newmsn", "newmsn");
+            _CorrectNames.Add("skype_old", "skype_old");
+            _CorrectNames.Add("Bing", "Bing");
+            _CorrectNames.Add("skype", "skype");
+            _CorrectNames.Add("MSN", "MSN");
+            _CorrectNames.Add("mac", "mac");
+            _CorrectNames.Add("msoffice", "msoffice");
+            _CorrectNames.Add("OneDrive", "OneDrive");
+            _CorrectNames.Add("outlook_com", "outlook_com");
+            _CorrectNames.Add("Windows", "Windows");
+            _CorrectNames.Add("Office", "Office");
+            _CorrectNames.Add("windowslive", "windowslive");
+            _CorrectNames.Add("ie", "ie");
+            _CorrectNames.Add("musicandvideo", "musicandvideo");
+            _CorrectNames.Add("WinPhone", "WinPhone");
+            _CorrectNames.Add("Protect", "Protect");
+            _CorrectNames.Add("Feedback", "Feedback");
+            _CorrectNames.Add("cortana", "cortana");
+            _CorrectNames.Add("Surface", "Surface");
+            _CorrectNames.Add("Mobiledevices", "Mobiledevices");
+            _CorrectNames.Add("Moderator", "Moderator");
+        }
+
         public Forum2017[] GetForumList(string localeName)
         {
             Log?.Invoke($"GetForumList: locale={localeName}");
@@ -40,6 +74,17 @@ namespace CommunityBridge2.WebServiceAnswers
             try
             {
                 var res = c.GetForumsByLocaleAsyncAsync(localeName).Result;
+                foreach(var r in res)
+                {
+                    if (_CorrectNames.ContainsKey(r.ShortName))
+                    {
+                        r.ShortName = _CorrectNames[r.ShortName];
+                    }
+                    else
+                    {
+                        // TODO: ShortName not found
+                    }
+                }
                 return res.ToArray();
             }
             catch(Exception exp)
@@ -127,13 +172,15 @@ namespace CommunityBridge2.WebServiceAnswers
 
         public Swagger.PagedResultOfContent GetThreadListByForumId(Guid forumId, string forumShortName, string localeName, string[] shortNames, DateTime? since, /*ThreadFilter[] threadFilters,*/ ThreadSortOrder? sortOrder, SortDirection? sortDirection, int startRow, int maxRows, AdditionalThreadDataOptions additionalThreadDataOptions)
         {
-
             var c = new Swagger.ThreadsClient();
             var filter = $"f0 eq '{forumShortName}' and languagelocale eq '{localeName}'";
             if (shortNames != null && shortNames.Length > 0)
             {
                 filter += $" and f1 eq '{shortNames[0]}'";
-
+                if (shortNames.Length > 1)
+                {
+                    filter += $" and f2 eq '{shortNames[1]}'";
+                }
             }
             if (since.HasValue)
             {

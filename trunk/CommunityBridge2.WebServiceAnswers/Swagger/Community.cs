@@ -392,6 +392,12 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
                             }
                         }
                         else
+                        if (status_ == "401")
+                        {
+                            var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new SwaggerException("Unauthorized", status_, responseData_, headers_, null);
+                        }
+                        else
                         if (status_ != "200" && status_ != "204")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -1084,6 +1090,11 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
                             throw new SwaggerException("Validation Errors", status_, responseData_, headers_, null);
                         }
                         else
+                        if (status_ == "401")
+                        {
+                            var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new SwaggerException("Unauthorized", status_, responseData_, headers_, null);
+                        }
                         if (status_ == "403")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);

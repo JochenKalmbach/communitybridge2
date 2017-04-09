@@ -260,7 +260,10 @@ namespace CommunityBridge2.WebServiceAnswers
             var c = new Swagger.MessageClient();
             var m = new Swagger.Message();
             m.ContentKey = threadId;
-            m.ReplyToMessageKey = parentId;
+            if (threadId != parentId)
+            {
+                m.ReplyToMessageKey = parentId;
+            }
             m.Text = messageText;
             try
             {

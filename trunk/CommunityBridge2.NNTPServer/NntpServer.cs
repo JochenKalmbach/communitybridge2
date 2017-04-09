@@ -604,6 +604,14 @@ namespace CommunityBridge2.NNTPServer
 
         public static string GetErrorResponseFromExeption(Exception ex)
         {
+            var ae = ex as AggregateException;
+            if (ae != null)
+            {
+                if (ae.InnerException != null)
+                {
+                    ex = ae.InnerException;
+                }
+            }
             var expTyp = ex.GetType();
 
             // Restrict the message to 250 chars..

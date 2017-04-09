@@ -824,27 +824,23 @@ namespace CommunityBridge2.Answers
             //else
             //  Id = GuidToId(msg.MessageKey.Value, domainName, null, dbMap == null ? null : dbMap.ActivityDate);
             Id = GuidToId(msg.MessageKey.Value, domainName, null, null);
-
-
-            DateTime? activityDateUtc = null;
-            if (dbMap != null)
-                activityDateUtc = dbMap.ActivityDateUtc;
-
-
             Guid = msg.MessageKey.Value;
             DiscussionId = msg.ContentKey.Value;
             Body = msg.Text;
 
 
-            // Nimm das Date von dem Mapping, wenn Activitiy gesetzt!
-            if (activityDateUtc.HasValue)
-            {
-                Date = string.Format(
-                      "{0} +0000",
-                      activityDateUtc.Value.ToString("ddd, d MMM yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)
-                      );
-            }
-            else
+            //DateTime? activityDateUtc = null;
+            //if (dbMap != null)
+            //    activityDateUtc = dbMap.ActivityDateUtc;
+            //// Nimm das Date von dem Mapping, wenn Activitiy gesetzt!
+            //if (activityDateUtc.HasValue)
+            //{
+            //    Date = string.Format(
+            //          "{0} +0000",
+            //          activityDateUtc.Value.ToString("ddd, d MMM yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)
+            //          );
+            //}
+            //else
             {
                 Date = string.Format(
                       "{0} +0000",

@@ -997,7 +997,7 @@ namespace CommunityBridge2.Answers
             if (msg.ContentKey.Value != msg.MessageKey)
             {
                 // It is a message
-                url = string.Format("https://answers.microsoft.com/message/{1}?pid={0} ", msg.ContentKey.Value, msg.MessageKey.Value);
+                url = string.Format("https://answers.microsoft.com/message/{1}?threadId={0} ", msg.ContentKey.Value, msg.MessageKey.Value);
             }
             else
             {
@@ -1499,12 +1499,12 @@ namespace CommunityBridge2.Answers
                 // First get the Msg# from the local mapping table:
                 GetMaxMessageNumber(group);
 
-                if (isAsync == false && group.ArticlesAvailable && UserSettings.Default.UpdateAsync)
-                {
-                    // Delay the update...
-                    Task.Factory.StartNew(() => UpdateGroupFromWebService(group, provider, progress, true));
-                    return null;
-                }
+                //if (isAsync == false && group.ArticlesAvailable && UserSettings.Default.UpdateAsync)
+                //{
+                //    // Delay the update...
+                //    Task.Factory.StartNew(() => UpdateGroupFromWebService(group, provider, progress, true));
+                //    return null;
+                //}
 
                 // Enthält die Messages, welche nacher gespeichert werden sollen!
                 // Diese werden aber erst noch auf doppelte Einträge verglichen!

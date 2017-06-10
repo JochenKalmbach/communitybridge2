@@ -66,6 +66,15 @@ namespace CommunityBridge2.WebServiceAnswers
             _CorrectNames.Add("Moderator", "Moderator");
         }
 
+        private static string GetCorrectShortName(string name)
+        {
+            if (_CorrectNames.ContainsKey(name))
+            {
+                return _CorrectNames[name];
+            }
+            return name;
+        }
+
         public Forum2017[] GetForumList(string localeName)
         {
             Log?.Invoke($"GetForumList: locale={localeName}");
@@ -76,14 +85,7 @@ namespace CommunityBridge2.WebServiceAnswers
                 var res = c.GetForumsByLocaleAsyncAsync(localeName).Result;
                 foreach(var r in res)
                 {
-                    if (_CorrectNames.ContainsKey(r.ShortName))
-                    {
-                        r.ShortName = _CorrectNames[r.ShortName];
-                    }
-                    else
-                    {
-                        // TODO: ShortName not found
-                    }
+                    r.ShortName = GetCorrectShortName(r.ShortName);
                 }
                 return res.ToArray();
             }
@@ -170,10 +172,29 @@ namespace CommunityBridge2.WebServiceAnswers
         }
         #endregion
 
+        private static CultureInfo _Culture = CultureInfo.InvariantCulture;
+        private static string FirstUpperCase(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return name;
+            string s = name.ToLower(_Culture);
+            string first = s.Substring(0, 1);
+            string rest = string.Empty;
+            if (s.Length > 1)
+                rest = s.Substring(1);
+            first = first.ToUpper(_Culture);
+            return first + rest;
+        }
+        private static string FirstLowerCase(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return name;
+            return name.ToLower(_Culture);
+        }
+
         public Swagger.PagedResultOfContent GetThreadListByForumId(Guid forumId, string forumShortName, string localeName, string[] shortNames, DateTime? since, /*ThreadFilter[] threadFilters,*/ ThreadSortOrder? sortOrder, SortDirection? sortDirection, int startRow, int maxRows, AdditionalThreadDataOptions additionalThreadDataOptions)
         {
             var c = new Swagger.ThreadsClient();
-            var filter = $"f0 eq '{forumShortName}' and languagelocale eq '{localeName}'";
+            var filter = $"(f0 eq '{FirstUpperCase(forumShortName)}' or f0 eq '{FirstLowerCase(forumShortName)}')";
+            filter += $" and languagelocale eq '{localeName}'";
             if (shortNames != null && shortNames.Length > 0)
             {
                 filter += $" and f1 eq '{shortNames[0]}'";

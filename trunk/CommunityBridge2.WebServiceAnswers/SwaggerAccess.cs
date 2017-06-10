@@ -145,14 +145,14 @@ namespace CommunityBridge2.WebServiceAnswers
                             }
                             catch (System.Exception exception)
                             {
-                                throw new Swagger.SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception);
+                                throw new Swagger.SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception, url_);
                             }
                         }
                         else
                         if (status_ != "200" && status_ != "204")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new Swagger.SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null);
+                            throw new Swagger.SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null, url_);
                         }
 
                         return default(System.Collections.ObjectModel.ObservableCollection<MetaData2017>);
@@ -218,7 +218,7 @@ namespace CommunityBridge2.WebServiceAnswers
             }
             catch(AggregateException ae)
             {
-                LogExp?.Invoke("GetThreadListByForumId", ae.InnerException);
+                LogExp?.Invoke($"EXP: GetThreadListByForumId: filter={filter}, order={order}", ae.InnerException);
                 throw ae;
             }
         }
@@ -265,11 +265,11 @@ namespace CommunityBridge2.WebServiceAnswers
             }
             catch(AggregateException ae)
             {
-                LogExp?.Invoke("GetMessageListByThreadId", ae.InnerException);
+                LogExp?.Invoke($"AEXP: GetMessageListByThreadId: threadId={threadId}", ae.InnerException);
             }
             catch (Exception exp)
             {
-                LogExp?.Invoke("GetMessageListByThreadId", exp);
+                LogExp?.Invoke($"EXP: GetMessageListByThreadId: threadId={threadId}", exp);
             }
 
             var res3 = new Swagger.PagedResultOfIResource();

@@ -49,10 +49,16 @@ namespace CommunityBridge2.NNTPServer
               sb.Append("Exception:");
               sb.AppendLine();
               var exT = exp.GetType();
+              bool toString = false;
               if (exT != null)
               {
-                sb.AppendFormat("Type {0}", exT.FullName);
+                string fn = exT.FullName;
+                sb.AppendFormat("Type {0}", fn);
                 sb.AppendLine();
+                if (fn != null && fn.IndexOf("swagger", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                  toString = true;
+                }
               }
               try
               {
@@ -93,6 +99,14 @@ namespace CommunityBridge2.NNTPServer
                 }
               }
 
+              if (toString)
+              {
+                sb.Append("ToString:");
+                sb.AppendLine();
+                sb.Append(exp.ToString());
+                sb.AppendLine();
+              }
+
               sb.Append("Stack-Trace:");
               sb.AppendLine();
               sb.Append(exp.StackTrace);
@@ -106,7 +120,6 @@ namespace CommunityBridge2.NNTPServer
           try
           {
             return exp.ToString();
-
           }
           catch
           {

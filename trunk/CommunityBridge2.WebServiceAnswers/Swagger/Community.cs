@@ -4,6 +4,8 @@
 // </auto-generated>
 //----------------------
 
+using System.Text;
+
 namespace CommunityBridge2.WebServiceAnswers.Swagger
 {
 #pragma warning disable // Disable all warnings
@@ -84,14 +86,14 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
                             }
                             catch (System.Exception exception)
                             {
-                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception);
+                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception, url_);
                             }
                         }
                         else
                         if (status_ != "200" && status_ != "204")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null);
+                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null, url_);
                         }
 
                         return default(object);
@@ -184,14 +186,14 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
                             }
                             catch (System.Exception exception)
                             {
-                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception);
+                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception, url_);
                             }
                         }
                         else
                         if (status_ != "200" && status_ != "204")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null);
+                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null, url_);
                         }
 
                         return default(System.Collections.ObjectModel.ObservableCollection<object>);
@@ -283,14 +285,14 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
                             }
                             catch (System.Exception exception)
                             {
-                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception);
+                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception, url_);
                             }
                         }
                         else
                         if (status_ != "200" && status_ != "204")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null);
+                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null, url_);
                         }
 
                         return default(System.Collections.ObjectModel.ObservableCollection<Forum2017>);
@@ -388,20 +390,20 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
                             }
                             catch (System.Exception exception)
                             {
-                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception);
+                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception, url_);
                             }
                         }
                         else
                         if (status_ == "401")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("Unauthorized", status_, responseData_, headers_, null);
+                            throw new SwaggerException("Unauthorized", status_, responseData_, headers_, null, url_);
                         }
                         else
                         if (status_ != "200" && status_ != "204")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null);
+                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null, url_);
                         }
 
                         return default(Message);
@@ -475,31 +477,31 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
                             }
                             catch (System.Exception exception)
                             {
-                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception);
+                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception, url_);
                             }
                         }
                         else
                         if (status_ == "400")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("Validation Errors", status_, responseData_, headers_, null);
+                            throw new SwaggerException("Validation Errors", status_, responseData_, headers_, null, url_);
                         }
                         else
                         if (status_ == "403")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("Access Denied", status_, responseData_, headers_, null);
+                            throw new SwaggerException("Access Denied", status_, responseData_, headers_, null, url_);
                         }
                         if (status_ == "500")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("Intenal Server Error", status_, responseData_, headers_, null);
+                            throw new SwaggerException("Intenal Server Error", status_, responseData_, headers_, null, url_);
                         }
                         else
                         if (status_ != "200" && status_ != "204")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null);
+                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null, url_);
                         }
 
                         return default(MessageCreateReply);
@@ -588,14 +590,14 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
                             }
                             catch (System.Exception exception)
                             {
-                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception);
+                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception, url_);
                             }
                         }
                         else
                         if (status_ != "200" && status_ != "204")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null);
+                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null, url_);
                         }
 
                         return default(object);
@@ -678,14 +680,14 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
                             }
                             catch (System.Exception exception)
                             {
-                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception);
+                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception, url_);
                             }
                         }
                         else
                         if (status_ != "200" && status_ != "204")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null);
+                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null, url_);
                         }
 
                         return default(PagedResultOfIResource);
@@ -766,14 +768,14 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
                             }
                             catch (System.Exception exception)
                             {
-                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception);
+                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception, url_);
                             }
                         }
                         else
                         if (status_ != "200" && status_ != "204")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null);
+                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null, url_);
                         }
 
                         return default(object);
@@ -859,26 +861,26 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
                             }
                             catch (System.Exception exception)
                             {
-                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception);
+                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception, url_);
                             }
                         }
                         else
                         if (status_ == "400")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("Validation Errors", status_, responseData_, headers_, null);
+                            throw new SwaggerException("Validation Errors", status_, responseData_, headers_, null, url_);
                         }
                         else
                         if (status_ == "403")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("Access Denied", status_, responseData_, headers_, null);
+                            throw new SwaggerException("Access Denied", status_, responseData_, headers_, null, url_);
                         }
                         else
                         if (status_ != "200" && status_ != "204")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null);
+                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null, url_);
                         }
 
                         return default(object);
@@ -983,14 +985,14 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
                             }
                             catch (System.Exception exception)
                             {
-                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception);
+                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception, url_);
                             }
                         }
                         else
                         if (status_ != "200" && status_ != "204")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null);
+                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null, url_);
                         }
 
                         return default(PagedResultOfContent);
@@ -1080,37 +1082,37 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
                             }
                             catch (System.Exception exception)
                             {
-                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception);
+                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception, url_);
                             }
                         }
                         else
                         if (status_ == "400")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("Validation Errors", status_, responseData_, headers_, null);
+                            throw new SwaggerException("Validation Errors", status_, responseData_, headers_, null, url_);
                         }
                         else
                         if (status_ == "401")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("Unauthorized", status_, responseData_, headers_, null);
+                            throw new SwaggerException("Unauthorized", status_, responseData_, headers_, null, url_);
                         }
                         if (status_ == "403")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("Access Denied for the Content", status_, responseData_, headers_, null);
+                            throw new SwaggerException("Access Denied for the Content", status_, responseData_, headers_, null, url_);
                         }
                         else
                         if (status_ == "404")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("Content Not Found", status_, responseData_, headers_, null);
+                            throw new SwaggerException("Content Not Found", status_, responseData_, headers_, null, url_);
                         }
                         else
                         if (status_ != "200" && status_ != "204")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null);
+                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null, url_);
                         }
 
                         return default(Content);
@@ -1195,19 +1197,25 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
                             }
                             catch (System.Exception exception)
                             {
-                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception);
+                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception, url_);
                             }
                         }
                         else
                         if (status_ == "400")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("Validation Errors", status_, responseData_, headers_, null);
+                            throw new SwaggerException("Validation Errors", status_, responseData_, headers_, null, url_);
+                        }
+                        else
+                        if (status_ == "401")
+                        {
+                            var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new SwaggerException("Unauthorized error", status_, responseData_, headers_, null, url_);
                         }
                         if (status_ != "200" && status_ != "204")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null);
+                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null, url_);
                         }
 
                         return default(PagedResultOfContent);
@@ -1281,26 +1289,26 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
                             }
                             catch (System.Exception exception)
                             {
-                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception);
+                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception, url_);
                             }
                         }
                         else
                         if (status_ == "400")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("Validation Errors", status_, responseData_, headers_, null);
+                            throw new SwaggerException("Validation Errors", status_, responseData_, headers_, null, url_);
                         }
                         else
                         if (status_ == "403")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("Access Denied", status_, responseData_, headers_, null);
+                            throw new SwaggerException("Access Denied", status_, responseData_, headers_, null, url_);
                         }
                         else
                         if (status_ != "200" && status_ != "204")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null);
+                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null, url_);
                         }
 
                         return default(object);
@@ -1376,14 +1384,14 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
                             }
                             catch (System.Exception exception)
                             {
-                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception);
+                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception, url_);
                             }
                         }
                         else
                         if (status_ != "200" && status_ != "204")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null);
+                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null, url_);
                         }
 
                         return default(System.Collections.ObjectModel.ObservableCollection<object>);
@@ -1463,26 +1471,26 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
                             }
                             catch (System.Exception exception)
                             {
-                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception);
+                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception, url_);
                             }
                         }
                         else
                         if (status_ == "400")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("Validation Errors", status_, responseData_, headers_, null);
+                            throw new SwaggerException("Validation Errors", status_, responseData_, headers_, null, url_);
                         }
                         else
                         if (status_ == "403")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("Access Denied", status_, responseData_, headers_, null);
+                            throw new SwaggerException("Access Denied", status_, responseData_, headers_, null, url_);
                         }
                         else
                         if (status_ != "200" && status_ != "204")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null);
+                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null, url_);
                         }
 
                         return default(object);
@@ -1572,32 +1580,32 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
                             }
                             catch (System.Exception exception)
                             {
-                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception);
+                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception, url_);
                             }
                         }
                         else
                         if (status_ == "400")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("Validation Errors", status_, responseData_, headers_, null);
+                            throw new SwaggerException("Validation Errors", status_, responseData_, headers_, null, url_);
                         }
                         else
                         if (status_ == "403")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("Access Denied to view the user", status_, responseData_, headers_, null);
+                            throw new SwaggerException("Access Denied to view the user", status_, responseData_, headers_, null, url_);
                         }
                         else
                         if (status_ == "404")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("User Not Found", status_, responseData_, headers_, null);
+                            throw new SwaggerException("User Not Found", status_, responseData_, headers_, null, url_);
                         }
                         else
                         if (status_ != "200" && status_ != "204")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null);
+                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null, url_);
                         }
 
                         return default(User);
@@ -1673,14 +1681,14 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
                             }
                             catch (System.Exception exception)
                             {
-                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception);
+                                throw new SwaggerException("Could not deserialize the response body.", status_, responseData_, headers_, exception, url_);
                             }
                         }
                         else
                         if (status_ != "200" && status_ != "204")
                         {
                             var responseData_ = await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null);
+                            throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, headers_, null, url_);
                         }
 
                         return default(System.Collections.ObjectModel.ObservableCollection<User>);
@@ -2494,20 +2502,50 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
         public string StatusCode { get; private set; }
 
         public string Response { get; private set; }
+        public string Url { get; private set; }
 
         public System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>> Headers { get; private set; }
 
-        public SwaggerException(string message, string statusCode, string response, System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Exception innerException)
+        public SwaggerException(string message, string statusCode, string response, System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Exception innerException, string url)
             : base(message, innerException)
         {
             StatusCode = statusCode;
             Response = response;
             Headers = headers;
+            Url = url;
         }
 
         public override string ToString()
         {
-            return string.Format("HTTP Response: \n\n{0}\n\n{1}", Response, base.ToString());
+            var sb = new StringBuilder();
+            sb.AppendLine(this.Message);
+            if (!string.IsNullOrEmpty(Url))
+            {
+                sb.AppendFormat("HTTP Url:", Url);
+                sb.AppendLine();
+            }
+            if (!string.IsNullOrEmpty(Response))
+            {
+                sb.AppendLine("HTTP Response:");
+                sb.AppendLine(Response);
+            }
+            if (Headers != null)
+            {
+                sb.AppendLine("HTTP Headers:");
+                foreach (var kv in Headers)
+                {
+                    if (kv.Value != null)
+                    {
+                        sb.AppendFormat(" {0}: {1}", kv.Key, string.Join("/", kv.Value));
+                    }
+                    else
+                    {
+                        sb.AppendFormat(" {0}: {1}", kv.Key, "(null)");
+                    }
+                    sb.AppendLine();
+                }
+            }
+            return sb.ToString();
         }
     }
 
@@ -2517,7 +2555,7 @@ namespace CommunityBridge2.WebServiceAnswers.Swagger
         public TResult Result { get; private set; }
 
         public SwaggerException(string message, string statusCode, string response, System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>> headers, TResult result, System.Exception innerException)
-            : base(message, statusCode, response, headers, innerException)
+            : base(message, statusCode, response, headers, innerException, null)
         {
             Result = result;
         }

@@ -95,14 +95,32 @@ namespace CommunityBridge2.NNTPServer
         void _articlesCacheCheckTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             int maxArticles = MaxCachedArticles;
-            int maxArticlesPerGroup;
+            int maxArticlesPerGroup = maxArticles;
+
+            // Count all available aritcles:
+            int actNoArticles = 0;
+            int actActiveGroups = 0;
             lock (GroupList)
             {
-                if (GroupList.Count <= 0)
-                    return;
-                maxArticlesPerGroup = maxArticles/this.GroupList.Count;
+                foreach (var g in GroupList.Values)
+                {
+                    lock (g.Articles)
+                    {
+                        actNoArticles += g.Articles.Count;
+                        if (g.Articles.Count > 0)
+                        {
+                            actActiveGroups++;
+                        }
+                    }
+                }
             }
-            maxArticlesPerGroup = Math.Max(100, maxArticlesPerGroup);
+
+
+            if (actActiveGroups > 0)
+            {
+                maxArticlesPerGroup = maxArticles / actActiveGroups;
+            }
+            maxArticlesPerGroup = Math.Max(1000, maxArticlesPerGroup);
 
             // Now check each group and reduce the number of stored articles, if appropriate...))
             lock(GroupList)

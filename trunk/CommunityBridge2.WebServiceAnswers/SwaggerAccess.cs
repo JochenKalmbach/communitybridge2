@@ -75,8 +75,15 @@ namespace CommunityBridge2.WebServiceAnswers
             return name;
         }
 
+        private static string GetCorrectLocale(string locale)
+        {
+            if (string.IsNullOrEmpty(locale)) return locale;
+            return locale.ToLower(_Culture);
+        }
+
         public Forum2017[] GetForumList(string localeName)
         {
+            localeName = GetCorrectLocale(localeName);
             Log?.Invoke($"GetForumList: locale={localeName}");
             var c = new Swagger.ForumClient();
 
@@ -100,6 +107,7 @@ namespace CommunityBridge2.WebServiceAnswers
         #region  GetMetaDataList (TODO)
         public MetaData2017[] GetMetaDataListByForumId(Forum2017 forum, string localeName)
         {
+            localeName = GetCorrectLocale(localeName);
             Log?.Invoke($"GetMetaDataListByForumId: shortName={forum.ShortName}, locale={localeName}");
             var url = $"https://answers.microsoft.com/{localeName}/forum/filtermenu?forumName={forum.ShortName}";
             try
@@ -192,6 +200,7 @@ namespace CommunityBridge2.WebServiceAnswers
 
         public Swagger.PagedResultOfContent GetThreadListByForumId(Guid forumId, string forumShortName, string localeName, string[] shortNames, DateTime? since, /*ThreadFilter[] threadFilters,*/ ThreadSortOrder? sortOrder, SortDirection? sortDirection, int startRow, int maxRows, AdditionalThreadDataOptions additionalThreadDataOptions)
         {
+            localeName = GetCorrectLocale(localeName);
             var c = new Swagger.ThreadsClient();
             var filter = $"(f0 eq '{FirstUpperCase(forumShortName)}' or f0 eq '{FirstLowerCase(forumShortName)}')";
             filter += $" and languagelocale eq '{localeName}'";

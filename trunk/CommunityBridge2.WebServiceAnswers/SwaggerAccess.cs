@@ -25,7 +25,7 @@ namespace CommunityBridge2.WebServiceAnswers
         {
             // INFO: List provided by Tom Chen on So 02.04.2017 00:52
             string[] cultures = {
-                "en-us", "de-de"
+                "en-us", "de-de", "fr-fr", "es-es"
                 //"en-us", "es-es", "pt-br", "de-de", "it-it", "fr-fr", "nl-nl",
                 //"ru-ru", "ko-ko", "tr-tr", "ja-jp", "zh-hans", "zh-hant", "cs-cz",
                 //"hu-hu", "pl-pl", "ar-sa", "he-il", "da-dk", "el-gr", "et-ee",
